@@ -30,12 +30,12 @@ function createUser(req, res, next) {
         VALUES ($1, $2)`,
             [email, hash])
             .then(() => {
-              next()
+              next();
             })
             .catch((err) => {
               console.log('error signing up', err.code)
               res.rows = err.code
-              next()
+              next();
             })
       }
     }
@@ -48,8 +48,8 @@ function login(req, res, next) {
     .then((data) => {
       console.log(data)
         if (bcrypt.compareSync(password, data.password_hash)) {
-          res.rows = data
-          next()
+          res.rows = data;
+          next();
         }
         res.status(401).json({data: "password and email do not match"})
       })
@@ -57,3 +57,6 @@ function login(req, res, next) {
         console.error(err, 'error finding user')
       })
 }
+
+module.exports.login = login;
+module.exports.createUser = createUser;

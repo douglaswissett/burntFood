@@ -1,3 +1,5 @@
+const $ = require('jquery');
+
 module.exports = {
   login(email, pass, cb) {
     cb = arguments[arguments.length - 1]

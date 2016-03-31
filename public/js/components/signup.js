@@ -1,5 +1,6 @@
 const React = require('react');
-const auth = require('../auth');
+const Link  = require('react-router').Link;
+const auth  = require('../auth');
 
 const Signup = React.createClass({
 handleSubmit : function(event) {
@@ -36,6 +37,7 @@ handleSubmit : function(event) {
             <input ref="pass"  type="password" placeholder="Password" />
             <button type="submit">Submit</button>
           </form>
+          <Link to="/"><button>Back</button></Link>
         </div>
       </div>
     )

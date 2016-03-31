@@ -1,17 +1,20 @@
-const React = require('react');
-const auth  = require('../auth');
-const Link  = require('react-router').Link;
+const React          = require('react');
+const Link           = require('react-router').Link;
+const auth           = require('../auth');
 
 const Login = React.createClass({
+
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
-  getInitialState : function() {
+
+  getInitialState() {
     return {
       error: false
     }
   },
-  handleSubmit : function(event) {
+
+  handleSubmit(event) {
     event.preventDefault()
 
     const email = this.refs.email.value
@@ -20,6 +23,7 @@ const Login = React.createClass({
     auth.login(email, pass, (loggedIn) => {
       if (!loggedIn)
         return this.setState({ error: true })
+
       const { location } = this.props
 
       if (location.state && location.state.nextPathname) {
@@ -29,22 +33,25 @@ const Login = React.createClass({
       }
     })
   },
-  render : function() {
+  render() {
     return (
       <div className="ui grid centered">
         <div className="six wide column">
-          <form className="ui form" onSubmit={this.handleSubmit}>      
+          <form ref="formSignup" className="ui form" onSubmit={this.handleSubmit}>
             <input ref="email" type="email" placeholder="Email address" autofocus />
-            <input ref="pass" type="password" placeholder="Password" />
+            <input ref="pass"  type="password" placeholder="Password" />
             <button type="submit">Login</button>
+            {this.state.error && (
+              <p>Bad login information</p>
+            )}
           </form>
-          <Link to="/signup"><button>Signup</button></Link>
-          {
-            this.state.error && (<p>Password and email do not match</p>)
-          }
+          <Link to="/"><button>Back</button></Link>
         </div>
       </div>
     )
   }
-})
+});
+
+
+
 module.exports = Login;
