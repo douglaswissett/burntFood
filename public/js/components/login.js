@@ -35,17 +35,19 @@ const Login = React.createClass({
   },
   render() {
     return (
-      <div className="ui grid centered">
-        <div className="six wide column">
-          <form ref="formSignup" className="ui form" onSubmit={this.handleSubmit}>
-            <input ref="email" type="email" placeholder="Email address" autofocus />
-            <input ref="pass"  type="password" placeholder="Password" />
-            <button type="submit">Login</button>
-            {this.state.error && (
-              <p>Bad login information</p>
-            )}
-          </form>
-          <Link to="/"><button>Back</button></Link>
+      <div className="ui container">
+        <div className="ui grid">
+          <div className="six wide column centered">
+            <form ref="formSignup" className="ui form" onSubmit={this.handleSubmit}>
+              <input ref="email" type="email" placeholder="Email address" autofocus />
+              <input ref="pass"  type="password" placeholder="Password" />
+              <button type="submit">Login</button>
+              {this.state.error && (
+                <p>Bad login information</p>
+              )}
+            </form>
+            <Link to="/"><button>Back</button></Link>
+          </div>
         </div>
       </div>
     )

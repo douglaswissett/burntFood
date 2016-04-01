@@ -1,4 +1,8 @@
 'use strict'
+/*
+  Dummie data page
+*/
+
 const _= require('underscore');
 
 

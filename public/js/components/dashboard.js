@@ -1,3 +1,4 @@
+'use strict'
 const React = require('react');
 const Link  = require('react-router').Link;
 const Logout = require('./logout.js');
@@ -11,7 +12,8 @@ const request = require('request');
 const Dashboard = React.createClass({
   getInitialState : function() {
     return {
-      query: []
+      query: [],
+      recipes: {}
     }
   },
   componentDidMount : function() {
@@ -209,14 +211,23 @@ const Dashboard = React.createClass({
     query = this.state.query.join(' ');
     query = query.replace(/ +/g, '+');
     
-    console.log(query)
     request('http://api.yummly.com/v1/api/recipes?_app_id=c1ccfb41&_app_key=c65556237ef5e562638d93d41433e9c8&q=' + query, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        console.log(body)
+        console.log(body);
+        let parsedData = JSON.parse(body);
+        parsedData.matches.forEach((el, index) => {
+          this.state.recipes['recipe-'+index] = el;
+          this.setState({recipes: this.state.recipes});
+        })
       }
-    })
+    }.bind(this));
 
     this.refs.recipeSearchForm.reset();
+  },
+  renderRecipeResult : function(key) {
+    return (
+      <RecipeResult key={key} index={key} details={this.state.recipes[key]} />
+    )
   },
   render : function() {
     return (
@@ -282,40 +293,64 @@ const Dashboard = React.createClass({
 
         <div className="ui grid">
 
-        <div className="sixteen wide column" style={{border: '1px solid blue'}}>
-          <ul>
-
-          </ul>
-        </div>
-
-        <div className="six wide column">
-
-        <form ref="recipeSearchForm" onSubmit={this.handleSubmit}>
-          <div className="ui search">
-            <div className="ui icon input">
-              <input className="prompt" ref="recipeQ" type="text" placeholder="Search ingredients..." />
-              <i className="search icon"></i>
-            </div>
-            <div className="results"></div>
-          </div>
-        </form>
-        </div>
-
-        <div className="ten wide column">
-          <div>
+          <div className="sixteen wide column" style={{border: '1px solid blue'}}>
             <ul>
-              {
-                this.state.query.map(function(el){
-                  return (<li>{el}</li>)
-                })
-              }
+
+            {
+              Object.keys(this.state.recipes).map(this.renderRecipeResult)
+            }
+
             </ul>
           </div>
-        </div>
+
+          <div className="eight wide column">
+            <form ref="recipeSearchForm" onSubmit={this.handleSubmit}>
+              <div className="ui search">
+                <div className="ui icon input">
+                  <input className="prompt" ref="recipeQ" type="text" placeholder="Search ingredients..." />
+                  <i className="search icon"></i>
+                </div>
+                <div className="results"></div>
+              </div>
+            </form>
+          </div>
+
+
+
+          <div className="eight wide column">
+            <div>
+              {
+                this.state.query.length > 0 ? (
+                <h2>Added ingredients</h2>
+                ) : (
+                  ''
+                )
+              }
+              <ul>
+                {
+                  this.state.query.map(function(el){
+                    return (<li>{el}</li>)
+                  })
+                }
+              </ul>
+            </div>
+          </div>
         
         </div>
 
       </div>
+    )
+  }
+});
+
+const RecipeResult = React.createClass({
+  render : function() {
+    return (
+      <li>
+        <div>
+          {this.props.details.recipeName}
+        </div>
+      </li>
     )
   }
 });

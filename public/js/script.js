@@ -110,22 +110,18 @@ const App = React.createClass({
 
                 <div className="ui left rail">  
                   <div className="ui sticky">
-
                     <Link to="/"><button className="fluid ui button" style={{margin: '10px auto'}}>Dash</button></Link>
                     <button className="fluid ui button" onClick={this.handleMenu} style={{margin: '10px auto'}}>New Feed</button>
                     <Link to="/"><button className="fluid ui button" style={{margin: '10px auto'}}>Hungry?</button></Link>
                     <Link to="/"><button className="fluid ui button" style={{margin: '10px auto'}}>Im Bojack</button></Link>
                     <Link to="/logout"><button className="fluid ui button" style={{margin: '10px auto'}}>Logout</button></Link>
-
-
                   </div>
                 </div>
 
-                
+
 
                 <Dashboard />
                 {this.props.children}
-
               </div>
             </div>
           </div>
@@ -136,18 +132,64 @@ const App = React.createClass({
 
       return (
         <div className="ui container">
-          <div>
-            <Link to="/login"><button>Log in</button></Link>
-            <Link to="/signup"><button>Signup</button></Link>      
-            {this.props.children}
-            
-          </div>
+        
+        <div className="ui grid">
+        <div className="ten wide column centered">
+        <div className="ui segment">
+
+
+        <div className="ui two column middle aligned very relaxed stackable grid">
+
+                <div className="column">
+                  <div className="ui form">
+                    <div className="field">
+                      <label>Username</label>
+                      <div className="ui left icon input">
+                        <input type="text" placeholder="Username" />
+                        <i className="user icon"></i>
+                      </div>
+                    </div>
+                    <div className="field">
+                      <label>Password</label>
+                      <div className="ui left icon input">
+                        <input type="password" />
+                        <i className="lock icon"></i>
+                      </div>
+                    </div>
+                    <Link to="/login"><div className="ui blue submit button">Login</div></Link>
+                  </div>
+                </div>
+
+
+                <div className="ui vertical divider">
+                  Or
+                </div>
+
+
+                <div className="center aligned column">
+                  <Link to="/signup"><div className="ui big green labeled icon button">
+                    <i className="signup icon"></i>
+                    Sign Up
+                  </div></Link>
+                </div>
+
+                {this.props.children}
+              </div>
+
+              </div>
+              </div>
+              </div>
+
         </div>
       )
     }
   }
 })
 
+
+  // <div className="five wide column">
+  //                 <Link to="/login"><button>Log in</button></Link>
+  //               </div>
 
 
 
