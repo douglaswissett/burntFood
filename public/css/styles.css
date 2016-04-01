@@ -7,3 +7,7 @@ html, body {
 .ui.selection.multiple.dropdown {
   width: 100%;
 }
+
+.ui.input {
+  width: 100%;
+}
