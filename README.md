@@ -15,16 +15,26 @@ Its simple... I think. This app will let you search over 1 million recipes throu
 - As a guest, I want to be able to Sign up
 - As a guest, I want to be able to Create a profile
 - As a guest, I want to be able to Login
+- As a user, I want to be able to Sign up and be logged in
 - As a user, I want to be able to Logout
-- As a user, I want to be able to view my recipes
-- As a user, I want to be able to remove a recipe
-- As a user, I want to be able to view my exercises
+- As a user, I want to be able to go to my dashboard
+- As a user, I want to be able to see my news feed
 - As a user, I want to be able to view my profile/stats
 - As a user, I want to be able to edit my profile/stats
 - As a user, I want to be able to search for a recipe
 - As a user, I want to be able to select a recipe
+- As a user, I want to be able to remove a recipe
+- As a user, I want to be able to view my recipes
 - As a user, I want to be given an exercise
+- As a user, I want to be able to view my exercises
 - As a user, I want to be able to complete an exercise
+
+Bonus:
+
+- As a user, I want to be able to follow other users
+- As a user, I want to be able to view my followers
+- As a user, I want to be able to view my own followers
+
 
 
 #### Development thoughts

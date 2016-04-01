@@ -41,6 +41,7 @@
     "react-essence": "^1.0.9",
     "react-router": "^2.0.1",
     "react-semantify": "^0.4.1",
+    "request": "^2.69.0",
     "semantic-ui": "^2.1.8",
     "watchify": "^3.7.0"
   }
