@@ -3,7 +3,7 @@ const React = require('react');
 const Link  = require('react-router').Link;
 const Logout = require('./logout.js');
 const request = require('request');
-
+const auth    = require('../auth');
 
 
 
@@ -210,17 +210,23 @@ const Dashboard = React.createClass({
     this.setState({ query: this.state.query });
     query = this.state.query.join(' ');
     query = query.replace(/ +/g, '+');
-    
-    request('http://api.yummly.com/v1/api/recipes?_app_id=c1ccfb41&_app_key=c65556237ef5e562638d93d41433e9c8&q=' + query, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        console.log(body);
-        let parsedData = JSON.parse(body);
-        parsedData.matches.forEach((el, index) => {
-          this.state.recipes['recipe-'+index] = el;
-          this.setState({recipes: this.state.recipes});
-        })
+
+    $.ajax({
+      url: '/api/users/yummly',
+      type: 'post',
+      data: {qs: query},
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
       }
-    }.bind(this));
+    })
+    .done((data) => {
+      console.log(data);
+      let parsedData = JSON.parse(data);
+      parsedData.matches.forEach((el, index) => {
+        this.state.recipes['recipe-'+index] = el;
+        this.setState({recipes: this.state.recipes});
+      });
+    });
 
     this.refs.recipeSearchForm.reset();
   },

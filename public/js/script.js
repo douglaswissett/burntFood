@@ -184,13 +184,7 @@ const App = React.createClass({
       )
     }
   }
-})
-
-
-  // <div className="five wide column">
-  //                 <Link to="/login"><button>Log in</button></Link>
-  //               </div>
-
+});
 
 
 
