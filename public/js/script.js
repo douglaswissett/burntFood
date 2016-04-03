@@ -40,7 +40,8 @@ const App = React.createClass({
     $('.ui.sticky')
       .sticky({
         context: '#example1',
-        offset: 20
+        offset: 20,
+        bottomOffset: 100
       })
   },
   handleMenu() {
@@ -184,13 +185,7 @@ const App = React.createClass({
       )
     }
   }
-})
-
-
-  // <div className="five wide column">
-  //                 <Link to="/login"><button>Log in</button></Link>
-  //               </div>
-
+});
 
 
 
