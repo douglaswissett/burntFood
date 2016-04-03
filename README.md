@@ -1,7 +1,3 @@
-<center>
-![GA Logo](https://github.com/generalassembly/ga-ruby-on-rails-for-devs/raw/master/images/ga.png "GeneralAssemb.ly")
-</center>
-
 ## Final Project: BWYE('Burn What You Eat') || BurntFood
 
 #### General Assembly, New York
