@@ -16,14 +16,21 @@ users.use(function(error, request, response, next) {
 });
 
 users.post('/yummly', (req, res) => {
-  console.log('yummly api route');
-  
-  var allowed = req.body.qs.split('+');
+  let allowed = req.body.qs.split('+');
   allowed = allowed.join('&allowedIngredient[]=');
   console.log(allowed);
 
 
-  request(`http:/\/api.yummly.com/v1/api/recipes?_app_id=${process.env.YUMMLY_APP_ID}&_app_key=${process.env.YUMMLY_APIKEY}&q=${req.body.qs}&allowedIngredient[]=${allowed}`, function (error, response, body) {
+  request(`http:/\/api.yummly.com/v1/api/recipes?_app_id=${process.env.YUMMLY_APP_ID}&_app_key=${process.env.YUMMLY_APIKEY}&allowedIngredient[]=${allowed}&maxResult=16`, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      res.send(body);
+    }
+  });
+})
+
+users.get('/yummly/:id', (req, res) => {
+
+  request(`http:/\/api.yummly.com/v1/api/recipe/${req.params.id}?_app_id=${process.env.YUMMLY_APP_ID}&_app_key=${process.env.YUMMLY_APIKEY}`, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.send(body);
     }

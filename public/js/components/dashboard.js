@@ -200,7 +200,8 @@ const Dashboard = React.createClass({
     $('.ui.search')
     .search({
       source: content
-    })
+    });
+
   },
   handleSubmit : function(event) {
     event.preventDefault();
@@ -220,12 +221,18 @@ const Dashboard = React.createClass({
       }
     })
     .done((data) => {
-      console.log(data);
+
       let parsedData = JSON.parse(data);
-      parsedData.matches.forEach((el, index) => {
-        this.state.recipes['recipe-'+index] = el;
+      if(parsedData.matches.length === 0) {
+        this.state.recipes = {};
         this.setState({recipes: this.state.recipes});
-      });
+      } else {
+
+        parsedData.matches.forEach((el, index) => {
+          this.state.recipes['recipe-'+index] = el;
+          this.setState({recipes: this.state.recipes});
+        });
+      }
     });
 
     this.refs.recipeSearchForm.reset();
@@ -237,7 +244,7 @@ const Dashboard = React.createClass({
   },
   render : function() {
     return (
-      <div style={{height: '1000px'}}>
+      <div>
 
         <div className="ui segment">
         <div className="ui grid">
@@ -299,16 +306,6 @@ const Dashboard = React.createClass({
 
         <div className="ui grid">
 
-          <div className="sixteen wide column" style={{border: '1px solid blue'}}>
-            <ul>
-
-            {
-              Object.keys(this.state.recipes).map(this.renderRecipeResult)
-            }
-
-            </ul>
-          </div>
-
           <div className="eight wide column">
             <form ref="recipeSearchForm" onSubmit={this.handleSubmit}>
               <div className="ui search">
@@ -320,8 +317,6 @@ const Dashboard = React.createClass({
               </div>
             </form>
           </div>
-
-
 
           <div className="eight wide column">
             <div>
@@ -341,25 +336,109 @@ const Dashboard = React.createClass({
               </ul>
             </div>
           </div>
-        
-        </div>
+          <div className="sixteen wide column">
+            
+            <div className="ui four cards">
 
+            {
+              Object.keys(this.state.recipes).map(this.renderRecipeResult)
+            }
+
+            </div>
+            
+          </div>
+
+
+
+        </div>
       </div>
     )
   }
 });
 
 const RecipeResult = React.createClass({
+  getInitialState : function() {
+    return {
+      recipeImage: '',
+      name: '',
+      ingredients: [],
+      totalTime: ''
+    }
+  },
+  componentWillMount : function() {
+    $.ajax({
+      url: '/api/users/yummly/'+ this.props.details.id,
+      type: 'GET',
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }
+    })
+    .done((data) => {
+      let parsedData = JSON.parse(data);
+      this.setState({
+        recipeImage: parsedData.images[0].hostedLargeUrl,
+        name: parsedData.name,
+        ingredients: parsedData.ingredientLines,
+        totalTime: parsedData.totalTime
+      });
+    });
+  },
+  componentDidMount : function() {
+    $(".rating").rating();
+  },
+  handleClick : function() {
+    $('.ui.modal.'+this.props.index)
+    .modal('show')
+  },
   render : function() {
     return (
-      <li>
-        <div>
-          {this.props.details.recipeName}
+
+        <div className="card" onClick={this.handleClick}>
+          <div className="image">
+            <img src={this.state.recipeImage} />
+          </div>
+          <div className="extra">
+            Rating:
+            <div className="ui star rating" data-rating={this.props.details.rating}></div>
+          </div>
+
+          <div className={"ui modal "+this.props.index}>
+            <i className="close icon"></i>
+            <div className="header">
+              {this.state.name}
+            </div>
+            <div className="image content">
+              <div className="ui medium image">
+                <img src={this.state.recipeImage} />
+              </div>
+              <div className="description">
+                <div className="ui header">Ingredients</div>
+                <ul>
+                  {
+                    this.state.ingredients.map(function(el) {
+                      return (<li>{el}</li>)
+                    })
+                  }
+                </ul>
+                <p>Total time: {this.state.totalTime}</p>
+              </div>
+            </div>
+            <div className="actions">
+              <div className="ui black deny button">
+                Nope
+              </div>
+              <div className="ui positive right labeled icon button">
+                Yep, thats me
+                <i className="checkmark icon"></i>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </li>
     )
   }
 });
+
 
 
 module.exports = Dashboard;
