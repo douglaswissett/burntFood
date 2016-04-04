@@ -27,6 +27,7 @@ const Dashboard = React.createClass({
   handleSubmit : function(event) {
     event.preventDefault();
 
+
     let query = this.refs.recipeQ.value;
     this.state.query.push(query);
     this.setState({ query: this.state.query });
@@ -42,27 +43,76 @@ const Dashboard = React.createClass({
       }
     })
     .done((data) => {
-
+      let that = this;
       let parsedData = JSON.parse(data);
-      if(parsedData.matches.length === 0) {
+      let matches = parsedData.matches;
+      if(matches.length === 0) {
         this.state.recipes = {};
         this.setState({recipes: this.state.recipes});
       } else {
 
-        parsedData.matches.forEach((el, index) => {
-          this.state.recipes['recipe-'+index] = el;
-          this.setState({recipes: this.state.recipes});
-        });
-      }
-    });
+        // parsedData.matches.forEach((el, index) => {
+        //   $.ajax({
+        //     url: '/api/users/yummly/'+ el.id,
+        //     type: 'GET',
+        //     beforeSend: function( xhr ) {
+        //       xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+        //     }
+        //   })
+        //   .done((data) => {
+        //     let parsedData = JSON.parse(data);
+        //     this.state.recipes['recipe-'+index] = el;
+        //     this.state.recipes['recipe-'+index].largeImage = parsedData.images[0].hostedLargeUrl;
+        //     this.state.recipes['recipe-'+index].ingredientLines = parsedData.ingredientLines;
+        //     this.state.recipes['recipe-'+index].totalTime = parsedData.totalTime;
 
+        //     this.setState({recipes: this.state.recipes});
+        //   });
+        // });
+
+
+
+        function requestRecipes(collection, i) {
+          if(collection.length == i) {
+            return;
+          }
+
+          let recipe = collection[i];
+
+          $.ajax({
+            url: '/api/users/yummly/'+ recipe.id,
+            type: 'GET',
+            beforeSend: function( xhr ) {
+              xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+            }  
+          })
+          .done((data) => {
+            let parsedData = JSON.parse(data);
+            that.state.recipes['recipe-'+i] = recipe;
+            that.state.recipes['recipe-'+i].largeImage = parsedData.images[0].hostedLargeUrl;
+            that.state.recipes['recipe-'+i].ingredientLines = parsedData.ingredientLines;
+            that.state.recipes['recipe-'+i].totalTime = parsedData.totalTime;
+            
+            that.setState({recipes: that.state.recipes});   
+
+            i++
+            requestRecipes(collection, i);
+          })
+        }
+
+        requestRecipes(matches, 0);
+
+
+      }
+
+    });
     this.refs.recipeSearchForm.reset();
   },
   renderRecipeResult : function(key) {
     return (
       <RecipeResult key={key} index={key} details={this.state.recipes[key]} />
     )
-  },
+  }, 
   render : function() {
     return (
       <div>
@@ -178,71 +228,21 @@ const Dashboard = React.createClass({
 });
 
 const RecipeResult = React.createClass({
-  getInitialState : function() {
-    return {
-      recipeImage: '',
-      name: '',
-      ingredients: [],
-      totalTime: ''
-    }
-  },
-  componentWillMount : function() {
-    console.log('grabing recipe id details');
-    $.ajax({
-      url: '/api/users/yummly/'+ this.props.details.id,
-      type: 'GET',
-      beforeSend: function( xhr ) {
-        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
-      }
-    })
-    .done((data) => {
-      let parsedData = JSON.parse(data);
-      this.setState({
-        recipeImage: parsedData.images[0].hostedLargeUrl,
-        name: parsedData.name,
-        ingredients: parsedData.ingredientLines,
-        totalTime: parsedData.totalTime
-      });
-    });
-  },
+
   componentDidMount : function() {
-    let that = this;
     $(".rating").rating();
-
-    $('.recipeImg').on('load', function() {
-      that.updateState();
-    })
-
+    console.log('reciperesults mounted');
   },
   handleClick : function() {
     $('.ui.modal.'+this.props.index)
     .modal('show')
-  },
-  updateState : function() {
-    console.log('updating state');
-    $.ajax({
-      url: '/api/users/yummly/'+ this.props.details.id,
-      type: 'GET',
-      beforeSend: function( xhr ) {
-        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
-      }
-    })
-    .done((data) => {
-      let parsedData = JSON.parse(data);
-      this.setState({
-        recipeImage: parsedData.images[0].hostedLargeUrl,
-        name: parsedData.name,
-        ingredients: parsedData.ingredientLines,
-        totalTime: parsedData.totalTime
-      });
-    });
   },
   render : function() {
     return (
 
         <div className="card" onClick={this.handleClick}>
           <div className="image">
-            <img src={this.props.details.smallImageUrls[0]} className="recipeImg" />
+            <img src={this.props.details.largeImage} className="recipeImg" />
           </div>
           <div className="extra">
             Rating:
@@ -253,30 +253,30 @@ const RecipeResult = React.createClass({
           <div className={"ui modal "+this.props.index}>
             <i className="close icon"></i>
             <div className="header">
-              {this.state.name}
+              {this.props.details.recipeName}
             </div>
             <div className="image content">
               <div className="ui medium image">
-                <img src={this.state.recipeImage} />
+                <img src={this.props.details.largeImage} />
               </div>
               <div className="description">
                 <div className="ui header">Ingredients</div>
                 <ul>
                   {
-                    this.state.ingredients.map(function(el) {
+                    this.props.details.ingredients.map(function(el) {
                       return (<li>{el}</li>)
                     })
                   }
                 </ul>
-                <p>Total time: {this.state.totalTime}</p>
+                <p>Total time: {this.props.details.totalTime}</p>
               </div>
             </div>
             <div className="actions">
-              <div className="ui black deny button">
-                Nope
+              <div className="ui black deny button">Nope
+                
               </div>
               <div className="ui positive right labeled icon button">
-                Yep, thats me
+                Cook it
                 <i className="checkmark icon"></i>
               </div>
             </div>
@@ -286,6 +286,8 @@ const RecipeResult = React.createClass({
     )
   }
 });
+
+
 
 
 
