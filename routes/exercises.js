@@ -10,11 +10,22 @@ const jwt         = require('jsonwebtoken');
 
 
 
+
+
+exercises.route('/')
+.get((req, res) => {
+  // get all exercises
+})
+.post( db.insertExercise, (req, res) => {
+  // insert exercise
+  res.json(res.data);
+})
+
+
 exercises.get('/random', db.getExerciseType, (req ,res) => {
   console.log(res.data);
   res.json(res.data);
 })
-
 
 
 

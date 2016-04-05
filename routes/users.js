@@ -24,8 +24,6 @@ users.post('/yummly', (req, res) => {
       res.send(body);
     }
   });
-
-  // res.send('Out of order');
 })
 
 users.get('/yummly/:id', (req, res) => {
@@ -35,7 +33,11 @@ users.get('/yummly/:id', (req, res) => {
       res.send(body);
     }
   });
-  // res.send('Out of order');
+})
+
+users.get('/info', db.getUserInfo, (req, res) => {
+  console.log(res.rows);
+  res.send(res.rows);
 })
 
 

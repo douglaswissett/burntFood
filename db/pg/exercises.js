@@ -24,4 +24,21 @@ function getExerciseType(req, res, next) {
   })
 }
 
+function insertExercise(req, res, next) {
+
+
+  db.one(`INSERT INTO exercises (exercise, duration) VALUES ($1, $2) RETURNING exercise_id;`,
+    [req.body.exercise, req.body.duration])
+  .then((data) => {
+    console.log(data);
+    res.data = data;
+    next();
+  })
+  .catch((err) => {
+    console.error('error inserting exercise ', err);
+    next();
+  })
+}
+
 module.exports.getExerciseType = getExerciseType;
+module.exports.insertExercise  = insertExercise;
