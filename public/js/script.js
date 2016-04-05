@@ -16,9 +16,10 @@ const Logout = require('./components/logout.js');
 const Dashboard = require('./components/dashboard.js');
 const NotFound = require('./components/404.js');
 const SearchForm = require('./components/searchform.js');
+const UISidebar = require('./components/sidebar.js');
 
 const App = React.createClass({
-  getInitialState() {
+  getInitialState : function() {
     return {
       loggedIn: auth.loggedIn(),
       query: [],
@@ -31,20 +32,19 @@ const App = React.createClass({
       recipes: recipes
     })
   },
-  contextTypes: {
+  contextTypes : function() {
     router: React.PropTypes.func.isRequired
   },
-  updateAuth(loggedIn) {
+  updateAuth : function(loggedIn) {
     this.setState({
       loggedIn: loggedIn
     })
   },
-
-  componentWillMount() {
+  componentWillMount : function() {
     auth.onChange = this.updateAuth
     auth.login()
   },
-  componentDidMount() {
+  componentDidMount : function() {
     $('.ui.sticky')
     .sticky({
       context: '#appContainer',
@@ -70,95 +70,39 @@ const App = React.createClass({
     });
 
   },
-  handleMenu() {
+  handleMenu : function() {
     $('.ui.sidebar').sidebar({
-      dimPage: false
+      dimPage: false,
     })
-    .sidebar('setting', 'transition', 'overlay')
+    .sidebar('setting', 'transition', 'scale down')
     .sidebar('toggle')
   },
-  render() {
+  render : function() {
     if(this.state.loggedIn) {
 
       return (
         <div className="ui container" id="appContainer" >
 
-          <Sidebar className="ui very wide sidebar vertical menu pushable" init={true}>
-            <div className="ui feed">
-              <div className="event">
-                <div className="label">
-                  <img src="/images/avatar/small/elliot.jpg" />
-                </div>
-                <div className="content">
-                  <div className="summary">
-                    <a className="user">
-                      Elliot Fu
-                    </a> added you as a friend
-                    <div className="date">
-                      1 Hour Ago
-                    </div>
-                  </div>
-                  <div className="meta">
-                    <a className="like">
-                      <i className="like icon"></i> 4 Likes
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="event">
-                <div className="label">
-                  <img src="/images/avatar/small/helen.jpg" />
-                </div>
-                <div className="content">
-                  <div className="summary">
-                    <a>Helen Troy</a> added <a>2 new illustrations</a>
-                    <div className="date">
-                      4 days ago
-                    </div>
-                  </div>
-                  <div className="extra images">
-                    <a><img src="/images/wireframe/image.png" /></a>
-                    <a><img src="/images/wireframe/image.png" /></a>
-                  </div>
-                  <div className="meta">
-                    <a className="like">
-                      <i className="like icon"></i> 1 Like
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Sidebar>
-
-
           <div className="ui grid">
-
-            <nav id="navbar">
-              <div className="ui menu">
-                <div className="header item" style={{width: '280px'}}>
-                  <div style={{margin: '0 auto'}}>Our Company</div>
-                </div>
-                <button className="fluid ui button header">Dash</button>
-                <button className="fluid ui button header">Recipes</button>
-                <button className="fluid ui button header">Profile</button>
-                <button className="fluid ui button header">Logout</button>
-              </div>
-            </nav>
-
-
-
             <div className="right floated left aligned thirteen wide column">
               <div className="ui segment" style={{height: '2000px !important'}}>
 
+
+                <UISidebar />
+
                 <div className="ui left rail">  
                   <div className="ui sticky">
+                    <div className="ui black big launch right attached fixed button" onClick={this.handleMenu} style={{margin : '0 0 20px 32px'}}>
+                      <i className="content icon"></i>
+                      <span className="text">Menu</span>
+                    </div>
                     
                     <SearchForm query={this.state.query} recipes={this.state.recipes} setAppState={this.setAppState} />
 
-                    <div>
+                    <div className="added list">
                       {
                         this.state.query.length > 0 ? (
-                        <h2 className="ui header">Added ingredients</h2>
+                        <h4 className="ui header">Added ingredients</h4>
                         ) : (
                           ''
                         )
@@ -173,7 +117,6 @@ const App = React.createClass({
                     </div>
 
 
-                    <Link to="/logout"><button className="fluid ui button" style={{margin: '10px auto'}}>Logout</button></Link>
                   </div>
                 </div>
 
@@ -246,9 +189,9 @@ const App = React.createClass({
 
 
 // <Link to="/"><button className="fluid ui button" style={{margin: '10px auto'}} id="dashBtn">Dash</button></Link>
-//                   <button className="fluid ui button" onClick={this.handleMenu} style={{margin: '10px auto'}}>New Feed</button>
-//                   <button className="fluid ui button" style={{margin: '10px auto'}} id="hungryBtn">Hungry?</button>
-//                   <button className="fluid ui button" style={{margin: '10px auto'}} id="recipeBtn">My recipes</button>
+// <button className="fluid ui button" onClick={this.handleMenu} style={{margin: '10px auto'}}>New Feed</button>
+// <button className="fluid ui button" style={{margin: '10px auto'}} id="hungryBtn">Hungry?</button>
+// <button className="fluid ui button" style={{margin: '10px auto'}} id="recipeBtn">My recipes</button>
 
 
 

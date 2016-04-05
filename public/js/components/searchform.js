@@ -5,19 +5,13 @@ const SearchForm = React.createClass({
   handleSubmit : function(event) {
     event.preventDefault();
 
-
-
+    // format query
     let query = this.refs.recipeQ.value;
     this.props.query.push(query);
-    // this.setState({ query: this.state.query });
-    console.log(this.props.query);
     query = this.props.query.join(' ');
     query = query.replace(/ +/g, '+');
 
-
-    
-    this.props.setAppState(this.props.query,{});
-
+    // ajax for recipes by ingredients
     $.ajax({
       url: '/api/users/yummly',
       type: 'post',
@@ -31,18 +25,16 @@ const SearchForm = React.createClass({
       let parsedData = JSON.parse(data);
       let matches = parsedData.matches;
 
-
-        // this.setState({recipes: this.state.recipes})
+      this.props.setAppState(this.props.query,{});
       if(matches.length === 0) {
-        this.props.recipes = {};
-        // this.setState({recipes: this.state.recipes});
+        this.props.setAppState(this.props.query,{});
       } else {
 
         function requestRecipes(collection, i) {
           if(collection.length == i) {
             return;
           }
-
+          // ajax for detailed data by recipe id
           let recipe = collection[i];
           $.ajax({
             url: '/api/users/yummly/'+ recipe.id,
@@ -53,13 +45,19 @@ const SearchForm = React.createClass({
           })
           .done((data) => {
             let parsedData = JSON.parse(data);
+            // assign state for each recipe
             that.props.recipes[recipe.id] = recipe;
             that.props.recipes[recipe.id].largeImage = parsedData.images[0].hostedLargeUrl;
             that.props.recipes[recipe.id].ingredientLines = parsedData.ingredientLines;
             that.props.recipes[recipe.id].totalTime = parsedData.totalTime;
-            // that.setState({recipes: that.state.recipes});
-            console.log(that.props.recipes);
 
+            // loop through nutritional values of each recipe and store calories
+            parsedData.nutritionEstimates.forEach((el) => {
+              if(el.attribute == "ENERC_KCAL") {
+                that.props.recipes[recipe.id].calories = el.value;
+              }
+            });
+            // set parent state of recipes and queries
             that.props.setAppState(that.props.query, that.props.recipes);
 
             i++

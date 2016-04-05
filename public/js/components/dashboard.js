@@ -11,14 +11,6 @@ const MyRecipes    = require('./myrecipes.js');
 const SearchForm = require('./SearchForm');
 
 const Dashboard = React.createClass({
-  componentDidMount : function() {
-
-    // $('.ui.search')
-    // .search({
-    //   source: content
-    // });
-
-  },
   renderRecipeResult : function(key) {
     return (
       <RecipeResult key={key} index={key} details={this.props.recipes[key]} />
@@ -28,7 +20,6 @@ const Dashboard = React.createClass({
     return (
       <div id="dashboard">
         <div className="ui grid">
-
           <div className="sixteen wide column">
             <div className="ui four cards">
               {
@@ -36,28 +27,31 @@ const Dashboard = React.createClass({
               }
             </div>
           </div>
-
           <div className="sixteen wide column" style={{border: '1px solid orange', height: '300px'}}>
             <h1>Most popular choices to go here...</h1>
           </div>
 
           <MyRecipes />
-
-          
-
-
-          <div className="eight wide column">
-
-          </div>
-
-          
-
           
         </div>
       </div>
     )
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

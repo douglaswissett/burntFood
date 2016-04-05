@@ -7,13 +7,14 @@ const RecipeResult = React.createClass({
   componentDidMount : function() {
     $(".rating").rating();
     console.log('reciperesults mounted');
+
+    $('.button.'+this.props.index).click(() => {
+      this.props.details.calories
+    })
   },
   handleClick : function() {
     $('.ui.modal.'+this.props.index)
     .modal('show')
-  },
-  handleSelect : function() {
-    
   },
   render : function() {
     return (
@@ -53,7 +54,7 @@ const RecipeResult = React.createClass({
               <div className="ui black deny button">Nope
                 
               </div>
-              <div className="ui positive right labeled icon button" onClick={this.handleSelect}>
+              <div className={"ui positive right labeled icon button "+this.props.index}>
                 Cook it
                 <i className="checkmark icon"></i>
               </div>
