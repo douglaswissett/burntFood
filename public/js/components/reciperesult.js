@@ -6,9 +6,12 @@ const RecipeResult = React.createClass({
 
   componentDidMount : function() {
     $(".rating").rating();
-    console.log('reciperesults mounted');
-
+    
     $('.button.'+this.props.index).click(() => {
+
+      
+
+
       this.props.details.calories
     })
   },

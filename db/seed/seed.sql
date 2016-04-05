@@ -1,0 +1,18 @@
+INSERT INTO exercise_categories (type, met) VALUES ('Sleep', 0.9);
+INSERT INTO exercise_categories (type, met) VALUES ('Watch your favorite TV show', 1);
+INSERT INTO exercise_categories (type, met) VALUES ('Work at your desk', 1.5);
+INSERT INTO exercise_categories (type, met) VALUES ('Take a stroll', 2.3);
+INSERT INTO exercise_categories (type, met) VALUES ('Take a walk', 2.9);
+INSERT INTO exercise_categories (type, met) VALUES ('Cycle with little effort', 3);
+INSERT INTO exercise_categories (type, met) VALUES ('Rush to work', 3.3);
+INSERT INTO exercise_categories (type, met) VALUES ('Workout at home', 3.5);
+INSERT INTO exercise_categories (type, met) VALUES ('Speed walk', 3.6);
+INSERT INTO exercise_categories (type, met) VALUES ('Take a leisurely cycle', 4);
+INSERT INTO exercise_categories (type, met) VALUES ('Use a cycling machine', 5.5);
+INSERT INTO exercise_categories (type, met) VALUES ('Do sexual activity', 5.8);
+INSERT INTO exercise_categories (type, met) VALUES ('Jog', 7);
+INSERT INTO exercise_categories (type, met) VALUES ('Do pushups', 8);
+INSERT INTO exercise_categories (type, met) VALUES ('Do situps', 8);
+INSERT INTO exercise_categories (type, met) VALUES ('Do jumping jacks', 8);
+INSERT INTO exercise_categories (type, met) VALUES ('Jog on the spot', 8);
+INSERT INTO exercise_categories (type, met) VALUES ('Rope jump', 10);

@@ -15,28 +15,26 @@ create table users(
   photo text
 );
 
-
-create table recipes(
-  recipe_id serial primary key,
-  recipe text,
-  img_url text,
-  calories text,
-  user_id references users on delete cascade,
-  exercise_id references exercises on delete cascade,
-  created timestamp NOT NULL DEFAULT(transaction_timestamp()),
-);
-
 create table exercises(
   exercise_id serial primary key,
   exercise text,
   duration numeric,
-  status boolean default false
-)
+  status boolean not null DEFAULT FALSE
+);
 
 create table exercise_categories(
   category_id serial primary key,
   type text,
   met numeric
-)
+);
 
+create table recipes(
+  recipe_id serial primary key,
+  recipe text,
+  img_url text,
+  calories numeric,
+  user_id integer references users on delete cascade,
+  exercise_id integer references exercises on delete cascade,
+  created timestamp NOT NULL DEFAULT(transaction_timestamp())
+);
 
