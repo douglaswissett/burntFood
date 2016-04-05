@@ -10,18 +10,26 @@ const Link           = require('react-router').Link;
 const auth           = require('./auth');
 import {Button, Rail, Sticky, Dropdown, Sidebar} from 'react-semantify';
 
-
 const Signup = require('./components/signup.js');
 const Login = require('./components/login.js');
 const Logout = require('./components/logout.js');
 const Dashboard = require('./components/dashboard.js');
 const NotFound = require('./components/404.js');
+const SearchForm = require('./components/searchform.js');
 
 const App = React.createClass({
   getInitialState() {
     return {
-      loggedIn: auth.loggedIn()
+      loggedIn: auth.loggedIn(),
+      query: [],
+      recipes: {}
     }
+  },
+  setAppState : function(query, recipes) {
+    this.setState({
+      query: query,
+      recipes: recipes
+    })
   },
   contextTypes: {
     router: React.PropTypes.func.isRequired
@@ -38,11 +46,29 @@ const App = React.createClass({
   },
   componentDidMount() {
     $('.ui.sticky')
-      .sticky({
-        context: '#example1',
-        offset: 20,
-        bottomOffset: 100
-      })
+    .sticky({
+      context: '#appContainer',
+      offset: 50
+    });
+
+    $('#dashBtn').click(function() {
+        $('html,body').animate({
+            scrollTop: $('#dashboard').offset().top},
+            'slow');
+    });
+
+    $('#hungryBtn').click(function() {
+        $('html,body').animate({
+            scrollTop: $('#hungry').offset().top},
+            'slow');
+    });
+
+    $('#recipeBtn').click(function() {
+        $('html,body').animate({
+            scrollTop: $('#myRecipes').offset().top},
+            'slow');
+    });
+
   },
   handleMenu() {
     $('.ui.sidebar').sidebar({
@@ -55,7 +81,7 @@ const App = React.createClass({
     if(this.state.loggedIn) {
 
       return (
-        <div className="ui container">
+        <div className="ui container" id="appContainer" >
 
           <Sidebar className="ui very wide sidebar vertical menu pushable" init={true}>
             <div className="ui feed">
@@ -106,22 +132,53 @@ const App = React.createClass({
 
 
           <div className="ui grid">
+
+            <nav id="navbar">
+              <div className="ui menu">
+                <div className="header item" style={{width: '280px'}}>
+                  <div style={{margin: '0 auto'}}>Our Company</div>
+                </div>
+                <button className="fluid ui button header">Dash</button>
+                <button className="fluid ui button header">Recipes</button>
+                <button className="fluid ui button header">Profile</button>
+                <button className="fluid ui button header">Logout</button>
+              </div>
+            </nav>
+
+
+
             <div className="right floated left aligned thirteen wide column">
-              <div className="ui segment" id="example1">
+              <div className="ui segment" style={{height: '2000px !important'}}>
 
                 <div className="ui left rail">  
                   <div className="ui sticky">
-                    <Link to="/"><button className="fluid ui button" style={{margin: '10px auto'}}>Dash</button></Link>
-                    <button className="fluid ui button" onClick={this.handleMenu} style={{margin: '10px auto'}}>New Feed</button>
-                    <Link to="/"><button className="fluid ui button" style={{margin: '10px auto'}}>Hungry?</button></Link>
-                    <Link to="/"><button className="fluid ui button" style={{margin: '10px auto'}}>Im Bojack</button></Link>
+                    
+                    <SearchForm query={this.state.query} recipes={this.state.recipes} setAppState={this.setAppState} />
+
+                    <div>
+                      {
+                        this.state.query.length > 0 ? (
+                        <h2 className="ui header">Added ingredients</h2>
+                        ) : (
+                          ''
+                        )
+                      }
+                      <ul>
+                        {
+                          this.state.query.map(function(el){
+                            return (<li style={{listStyle: 'none', fontWeight: 'bold'}}>{el}</li>)
+                          })
+                        }
+                      </ul>
+                    </div>
+
+
                     <Link to="/logout"><button className="fluid ui button" style={{margin: '10px auto'}}>Logout</button></Link>
                   </div>
                 </div>
 
 
-
-                <Dashboard />
+                <Dashboard query={this.state.query} recipes={this.state.recipes} />
                 {this.props.children}
               </div>
             </div>
@@ -186,6 +243,14 @@ const App = React.createClass({
     }
   }
 });
+
+
+// <Link to="/"><button className="fluid ui button" style={{margin: '10px auto'}} id="dashBtn">Dash</button></Link>
+//                   <button className="fluid ui button" onClick={this.handleMenu} style={{margin: '10px auto'}}>New Feed</button>
+//                   <button className="fluid ui button" style={{margin: '10px auto'}} id="hungryBtn">Hungry?</button>
+//                   <button className="fluid ui button" style={{margin: '10px auto'}} id="recipeBtn">My recipes</button>
+
+
 
 
 
