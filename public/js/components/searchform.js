@@ -67,12 +67,13 @@ const SearchForm = React.createClass({
         requestRecipes(matches, 0);
       }
     });
+
     this.refs.recipeSearchForm.reset();
   },
   render : function() {
     return (
       <div className="eight wide column" id="hungry">
-        <form ref="recipeSearchForm" onSubmit={this.handleSubmit}>
+        <form ref="recipeSearchForm" id="recipeSearchForm" onSubmit={this.handleSubmit}>
           <div className="ui search">
             <div className="ui icon input">
               <input className="prompt" ref="recipeQ" type="text" placeholder="Search ingredients..." />

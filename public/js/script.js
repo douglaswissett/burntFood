@@ -45,6 +45,7 @@ const App = React.createClass({
     auth.login()
   },
   componentDidMount : function() {
+
     $('.ui.sticky')
     .sticky({
       context: '#appContainer',

@@ -11,9 +11,48 @@ const MyRecipes    = require('./myrecipes.js');
 const SearchForm = require('./SearchForm');
 
 const Dashboard = React.createClass({
+
+  getInitialState : function() {
+    return {
+      savedData: {}
+    }
+  },
+  componentWillMount : function() {
+
+    $.ajax({
+      url: '/api/recipes/saved',
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }
+    })
+    .done((data) => {
+
+      data.forEach((el) => {
+        this.state.savedData[el.recipe_id] = el;
+        this.setState({savedData: this.state.savedData});
+      })
+    })
+  },
+  updateSavedData : function() {
+
+    $.ajax({
+      url: '/api/recipes/saved',
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }
+    })
+    .done((data) => {
+
+      data.forEach((el) => {
+        this.state.savedData[el.recipe_id] = el;
+        this.setState({savedData: this.state.savedData});
+      })
+    })
+
+  },
   renderRecipeResult : function(key) {
     return (
-      <RecipeResult key={key} index={key} details={this.props.recipes[key]} />
+      <RecipeResult key={key} index={key} details={this.props.recipes[key]} updateSavedData={this.updateSavedData} />
     )
   },
   render : function() {
@@ -31,7 +70,7 @@ const Dashboard = React.createClass({
             </div>
           </div>
 
-          <MyRecipes />
+          <MyRecipes savedData={this.state.savedData} />
           
         </div>
       </div>

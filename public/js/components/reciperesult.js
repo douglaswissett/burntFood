@@ -75,6 +75,8 @@ const RecipeResult = React.createClass({
               })
               .done(() => {
                 console.log('inserted recipe ');
+                
+                that.props.updateSavedData();
               })
             }) 
           }
@@ -124,7 +126,7 @@ const RecipeResult = React.createClass({
               <div className="ui black deny button">Nope
                 
               </div>
-              <div className={"ui positive right labeled icon button "+this.props.index}>
+              <div className={"ui positive right labeled icon button cook "+this.props.index}>
                 Cook it
                 <i className="checkmark icon"></i>
               </div>
