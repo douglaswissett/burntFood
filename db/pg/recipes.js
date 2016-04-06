@@ -14,8 +14,8 @@ const db = pgp(cn)
 function insertRecipe(req, res, next) {
   req.body.user_id = req.user.user_id;
 
-  db.none(`INSERT INTO recipes (recipe, img_url, calories, user_id, exercise_id) 
-    VALUES ($/recipe/, $/img_url/, $/calories/, $/user_id/, $/exercise_id/);`,
+  db.none(`INSERT INTO recipes (recipe, img_url, calories, user_id, exercise_id, yummly_id) 
+    VALUES ($/recipe/, $/img_url/, $/calories/, $/user_id/, $/exercise_id/, $/yummly_id/);`,
       req.body )
   .then((data) => {
     next();

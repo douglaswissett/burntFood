@@ -31,6 +31,7 @@ create table exercise_categories(
 create table recipes(
   recipe_id serial primary key,
   recipe text,
+  yummly_id text,
   img_url text,
   calories numeric,
   user_id integer references users on delete cascade,

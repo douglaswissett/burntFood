@@ -58,11 +58,11 @@ const App = React.createClass({
       offset: 0
     });
 
-    $('#dashBtn').click(function() {
-        $('html,body').animate({
-            scrollTop: $('#dashboard').offset().top},
-            'slow');
+    $('#homeBtn').click(function() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
     });
+    
 
     $('#hungryBtn').click(function() {
       console.log('move to hungry');
@@ -96,7 +96,7 @@ const App = React.createClass({
             <div className="ui three item menu">
 
               <div style={{border: '3px solid black', margin: '0 145px 0 -45px'}}>Company logo</div>
-              <a className="item right floated">Home</a>
+              <a className="item right floated" id="homeBtn">Back to top</a>
               <a className="item right floated" id="hungryBtn">Hungry?</a>
               <a className="item right floated" id="statsBtn">My Area</a>
               <Link to="/logout"><a className="item right floated">Logout</a></Link>

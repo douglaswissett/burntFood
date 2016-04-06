@@ -4,28 +4,7 @@ const auth    = require('../auth');
 
 const MyRecipes = React.createClass({
 
-  // getInitialState : function() {
-  //   return {
-  //     savedData: {},
-  //   }
-  // },
-  // componentDidMount : function() {
-  //   let that = this;
 
-  //   $.ajax({
-  //     url: '/api/recipes/saved',
-  //     beforeSend: function( xhr ) {
-  //       xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
-  //     }
-  //   })
-  //   .done((data) => {
-
-  //     data.forEach((el) => {
-  //       this.state.savedData[el.recipe_id] = el;
-  //       this.setState({savedData: this.state.savedData});
-  //     })
-  //   })
-  // },
   renderSavedData : function(key) {
     return (
       <UserData key={key} index={key} details={this.props.savedData[key]} />
@@ -53,17 +32,31 @@ const MyRecipes = React.createClass({
 
 const UserData = React.createClass({
   render : function() {
+    
+    
+
+    var recipe = this.props.details;
+    console.log(recipe)
+
+    console.log(recipe.list)
+    console.log(recipe['list'])
+    console.log(Object.keys(recipe))
     return (
       <div className="ui card">
         <div className="card">
           <div className="content">
-            <img className="right floated mini ui image" src={this.props.details.img_url} />
+            <img className="right floated mini ui image" src={this.props.details.img_url} style={{width: '185px !important'}} />
             <div className="header">
               {this.props.details.recipe}
             </div>
             <div className="description">
               {"This contains: " + this.props.details.calories + ' calories.'}<br/>
               {this.props.details.exercise + " for " + this.props.details.duration + ' minutes'}
+
+              <ul>
+
+              </ul>
+
             </div>
           </div>
           <div className="extra content">

@@ -11,6 +11,12 @@ const RecipeResult = React.createClass({
     
     $('.button.'+this.props.index).click(() => {
       let calories = this.props.details.calories;
+
+      if(this.props.details.calories === undefined) {
+        // some yummly data has no calorie intake, give a rough guestimate... dummy data is wrong :)
+        calories = Math.floor(Math.random() * 600 + 100)
+      }
+
       let exercise;
       let userInfo;
       let bmr;
@@ -71,11 +77,12 @@ const RecipeResult = React.createClass({
                   img_url: that.props.details.largeImage,
                   calories: calories,
                   exercise_id: data.exercise_id,
+                  yummly_id: that.props.details.id
                 }
               })
               .done(() => {
                 console.log('inserted recipe ');
-                
+
                 that.props.updateSavedData();
               })
             }) 
