@@ -20,15 +20,15 @@ const Dashboard = React.createClass({
     return (
       <div id="dashboard">
         <div className="ui grid">
-          <div className="sixteen wide column">
-            <div className="ui four cards">
-              {
-                Object.keys(this.props.recipes).map(this.renderRecipeResult)
-              }
+          <div className="sixteen wide column" style={{paddingTop: '100px'}}>
+            <div className="ui segment">
+              <h2>Search for recipes</h2>
+              <div className="ui four cards" style={{border: '1px solid blue'}}>
+                {
+                  Object.keys(this.props.recipes).map(this.renderRecipeResult)
+                }
+              </div>
             </div>
-          </div>
-          <div className="sixteen wide column" style={{border: '1px solid orange', height: '300px'}}>
-            <h1>Most popular choices to go here...</h1>
           </div>
 
           <MyRecipes />

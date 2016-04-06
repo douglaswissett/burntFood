@@ -48,7 +48,13 @@ const App = React.createClass({
     $('.ui.sticky')
     .sticky({
       context: '#appContainer',
-      offset: 50
+      offset: 80
+    });
+
+    $('.ui.sticky.nav')
+    .sticky({
+      context: '#appContainer',
+      offset: 0
     });
 
     $('#dashBtn').click(function() {
@@ -58,12 +64,14 @@ const App = React.createClass({
     });
 
     $('#hungryBtn').click(function() {
+      console.log('move to hungry');
         $('html,body').animate({
-            scrollTop: $('#hungry').offset().top},
+            scrollTop: $('#dashboard').offset().top},
             'slow');
     });
 
-    $('#recipeBtn').click(function() {
+    $('#statsBtn').click(function() {
+        console.log('scroll to recipe search');
         $('html,body').animate({
             scrollTop: $('#myRecipes').offset().top},
             'slow');
@@ -81,48 +89,54 @@ const App = React.createClass({
     if(this.state.loggedIn) {
 
       return (
-        <div className="ui container" id="appContainer" >
+        <div>
 
-          <div className="ui grid">
-            <div className="right floated left aligned thirteen wide column">
-              <div className="ui segment" style={{height: '2000px !important'}}>
+          <div className="ui sticky nav">
+            <div className="ui three item menu">
 
+              <div style={{border: '3px solid black', margin: '0 145px 0 -45px'}}>Company logo</div>
+              <a className="item right floated">Home</a>
+              <a className="item right floated" id="hungryBtn">Hungry?</a>
+              <a className="item right floated" id="statsBtn">My Area</a>
+              <Link to="/logout"><a className="item right floated">Logout</a></Link>
+            </div>
+          </div>
 
-                <UISidebar />
+          <div className="ui container" id="appContainer" >
 
-                <div className="ui left rail">  
-                  <div className="ui sticky">
-                    <div className="ui black big launch right attached fixed button" onClick={this.handleMenu} style={{margin : '0 0 20px 32px'}}>
-                      <i className="content icon"></i>
-                      <span className="text">Menu</span>
-                    </div>
-                    
-                    <SearchForm query={this.state.query} recipes={this.state.recipes} setAppState={this.setAppState} />
+            <div className="ui grid">
+              <div className="right floated left aligned thirteen wide column">
+                <div className="ui segment" style={{height: '2000px !important', border: '3px solid gold'}}>
 
-                    <div className="added list">
-                      {
-                        this.state.query.length > 0 ? (
-                        <h4 className="ui header">Added ingredients</h4>
-                        ) : (
-                          ''
-                        )
-                      }
-                      <ul>
+                  <div className="ui left rail" style={{border: '3px dotted green'}}>  
+                    <div className="ui sticky">
+                      
+                      <SearchForm query={this.state.query} recipes={this.state.recipes} setAppState={this.setAppState} />
+
+                      <div className="added list">
                         {
-                          this.state.query.map(function(el){
-                            return (<li style={{listStyle: 'none', fontWeight: 'bold'}}>{el}</li>)
-                          })
+                          this.state.query.length > 0 ? (
+                          <h4 className="ui header">Added ingredients</h4>
+                          ) : (
+                            ''
+                          )
                         }
-                      </ul>
+                        <ul>
+                          {
+                            this.state.query.map(function(el){
+                              return (<li style={{listStyle: 'none', fontWeight: 'bold'}}>{el}</li>)
+                            })
+                          }
+                        </ul>
+                      </div>
                     </div>
-
-
                   </div>
+
+
+
+                  <Dashboard query={this.state.query} recipes={this.state.recipes} />
+                  {this.props.children}
                 </div>
-
-
-                <Dashboard query={this.state.query} recipes={this.state.recipes} />
-                {this.props.children}
               </div>
             </div>
           </div>

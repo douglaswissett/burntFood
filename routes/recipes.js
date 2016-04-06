@@ -19,6 +19,11 @@ recipes.route('/')
   res.send('insert recipe');
 })
 
+recipes.get('/saved', db.getUserRecipes, (req, res) => {
+  // get user recipes & exercises
+  res.json(res.data);
+})
+
 
 
 module.exports = recipes;

@@ -13,7 +13,7 @@ const UISidebar = React.createClass({
           Dashboard
         </a>
         <a className="item">
-          My area
+          My recipes
         </a>
         <a href="/logout" className="item right floated">
           Logout

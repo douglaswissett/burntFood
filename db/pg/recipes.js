@@ -26,4 +26,20 @@ function insertRecipe(req, res, next) {
   })
 }
 
+function getUserRecipes(req, res, next) {
+
+  db.any(`SELECT r.*, e.exercise, e.duration, e.status from recipes as r 
+    LEFT JOIN exercises as e ON r.exercise_id = e.exercise_id WHERE r.user_id = $1;`,
+    [req.user.user_id])
+  .then((data) => {
+    res.data = data;
+    next();
+  })
+  .catch((err) => {
+    console.error('error getting user recipes&exercises ', err);
+    next();
+  })
+}
+
 module.exports.insertRecipe = insertRecipe;
+module.exports.getUserRecipes = getUserRecipes;
