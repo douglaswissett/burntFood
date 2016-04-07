@@ -10,8 +10,10 @@ const RecipeResult = React.createClass({
 
     
     $('.button.'+this.props.index).click(() => {
-      let calories = this.props.details.calories;
 
+
+
+      let calories = this.props.details.calories;
       if(this.props.details.calories === undefined) {
         // some yummly data has no calorie intake, give a rough guestimate... dummy data is wrong :)
         calories = Math.floor(Math.random() * 600 + 100)
@@ -83,7 +85,15 @@ const RecipeResult = React.createClass({
               .done(() => {
                 console.log('inserted recipe ');
 
-                that.props.updateSavedData();
+                $('body').append(`<div class='popup ${that.props.index}'></div>`);
+                let $popup = $('.popup.'+that.props.index);
+                let $header = $('<div>');
+                let $body = $('<div>');
+
+                $header.append(`<h3>Nice! Now you need to workout</h3>`);
+                $body.append(`<p>${exercise.type} for ${Math.ceil(duration)} minutes.</p>`)
+                $popup.append($header, $body);
+
               })
             }) 
           }
@@ -92,7 +102,7 @@ const RecipeResult = React.createClass({
     })
   },
   handleClick : function() {
-    $('.ui.modal.'+this.props.index)
+    $('.ui.modal.recipe.'+this.props.index)
     .modal('show')
   },
   render : function() {
@@ -108,7 +118,7 @@ const RecipeResult = React.createClass({
             {this.props.details.recipeName}
           </div>
 
-          <div className={"ui modal "+this.props.index}>
+          <div className={"ui modal recipe "+this.props.index}>
             <i className="close icon"></i>
             <div className="header">
               {this.props.details.recipeName}
@@ -139,6 +149,7 @@ const RecipeResult = React.createClass({
               </div>
             </div>
           </div>
+
 
         </div>
     )

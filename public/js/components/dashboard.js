@@ -13,7 +13,7 @@ const SearchForm = require('./SearchForm');
 const Dashboard = React.createClass({
   renderRecipeResult : function(key) {
     return (
-      <RecipeResult key={key} index={key} details={this.props.recipes[key]} updateSavedData={this.updateSavedData} />
+      <RecipeResult key={key} index={key} details={this.props.recipes[key]} />
     )
   },
   render : function() {
