@@ -91,10 +91,25 @@ const RecipeResult = React.createClass({
                 let $body = $('<div>');
 
                 $header.append(`<h3>Nice! Now you need to workout</h3>`);
-                $body.append(`<p>${exercise.type} for ${Math.ceil(duration)} minutes.</p>`)
+                $body.append(`<p>${exercise.type} for ${Math.ceil(duration)} minutes.</p>`);
+                $body.append(`<button class="ui positive button exercise">Okay!</button>`)
                 $popup.append($header, $body);
 
-              })
+                setTimeout(function(){
+                  $popup.velocity({ left: "320px"},
+                    { duration: 200, easing: "linear"})
+                },200);
+
+                $('.button.ui.positive.exercise').click(function() {
+                  console.log('deltete the exercise popup');
+                  
+                  $popup.velocity({ left: "-1000px"},
+                  { duration: 300, easing: "linear"});
+
+                  setTimeout(function(){ $popup.remove(); },500);
+
+                });
+              });
             }) 
           }
         })

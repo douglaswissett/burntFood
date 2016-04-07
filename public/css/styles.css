@@ -63,3 +63,13 @@ html, body {
   top: -485px;
   border: 2px solid blue;
 }
+
+.popup {
+  width: 600px;
+  height: 300px;
+  position: fixed;
+  top: 188px;
+  left: 1440px;
+  background-color: white;
+  border: 2px solid black;
+}
