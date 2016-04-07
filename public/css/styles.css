@@ -1,6 +1,7 @@
 html, body {
   padding: 0;
   margin: 0;
+  height: 100%;
 }
 
 .ui.selection.multiple.dropdown {
@@ -17,7 +18,6 @@ html, body {
 }
 
  #appContainer {
-  height: 2200px !important;
   border: 4px solid orange;
   margin-top: 600px;
  }
@@ -56,4 +56,10 @@ html, body {
 .ui.menu.three.item .item {
   width: 15%;
   margin-left: 0 !important;
+}
+
+.myRecipe {
+  position: relative;
+  top: -485px;
+  border: 2px solid blue;
 }

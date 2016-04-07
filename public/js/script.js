@@ -17,6 +17,7 @@ const Dashboard = require('./components/dashboard.js');
 const NotFound = require('./components/404.js');
 const SearchForm = require('./components/searchform.js');
 const UISidebar = require('./components/sidebar.js');
+const MyRecipes = require('./components/myrecipes.js');
 
 const App = React.createClass({
   getInitialState : function() {
@@ -66,16 +67,15 @@ const App = React.createClass({
 
     $('#hungryBtn').click(function() {
       console.log('move to hungry');
+        $('#mainDash').show();
         $('html,body').animate({
             scrollTop: $('#dashboard').offset().top},
             'slow');
     });
 
     $('#statsBtn').click(function() {
-        console.log('scroll to recipe search');
-        $('html,body').animate({
-            scrollTop: $('#myRecipes').offset().top},
-            'slow');
+        $('#mainDash').hide();
+        $("html, body").animate({ scrollTop: 0 }, "slow");
     });
 
   },
@@ -97,19 +97,19 @@ const App = React.createClass({
 
               <div style={{border: '3px solid black', margin: '0 145px 0 -45px'}}>Company logo</div>
               <a className="item right floated" id="homeBtn">Back to top</a>
-              <a className="item right floated" id="hungryBtn">Hungry?</a>
-              <a className="item right floated" id="statsBtn">My Area</a>
+              <Link to="/"><a className="item right floated" id="hungryBtn">Hungry?</a></Link>
+              <Link to="/recipes"><a className="item right floated" id="statsBtn">My Area</a></Link>
               <Link to="/logout"><a className="item right floated">Logout</a></Link>
             </div>
           </div>
 
           <div className="ui container" id="appContainer" >
 
-            <div className="ui grid">
+            <div className="ui grid" id="mainDash">
               <div className="right floated left aligned thirteen wide column">
-                <div className="ui segment" style={{height: '2000px !important', border: '3px solid gold'}}>
+                <div className="ui segment" style={{height: '1170px !important', border: '3px solid gold'}}>
 
-                  <div className="ui left rail" style={{border: '3px dotted green'}}>  
+                  <div className="ui left rail" style={{border: '3px dotted green', height: '905px !important', marginTop: '100px !important'}}>  
                     <div className="ui sticky">
                       
                       <SearchForm query={this.state.query} recipes={this.state.recipes} setAppState={this.setAppState} />
@@ -133,13 +133,14 @@ const App = React.createClass({
                     </div>
                   </div>
 
-
-
                   <Dashboard query={this.state.query} recipes={this.state.recipes} />
-                  {this.props.children}
+
                 </div>
               </div>
             </div>
+
+            {this.props.children}
+
           </div>
         </div>
       )
@@ -203,19 +204,11 @@ const App = React.createClass({
 });
 
 
-// <Link to="/"><button className="fluid ui button" style={{margin: '10px auto'}} id="dashBtn">Dash</button></Link>
-// <button className="fluid ui button" onClick={this.handleMenu} style={{margin: '10px auto'}}>New Feed</button>
-// <button className="fluid ui button" style={{margin: '10px auto'}} id="hungryBtn">Hungry?</button>
-// <button className="fluid ui button" style={{margin: '10px auto'}} id="recipeBtn">My recipes</button>
-
-
-
-
-
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <Route path="dashboard" component={Dashboard} />
+      <Route path="recipes" component={MyRecipes} />
     </Route>
     <Route path="logout" component={Logout} />
     <Route path="login" component={Login} />
