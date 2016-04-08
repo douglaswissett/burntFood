@@ -48,6 +48,29 @@ const MyRecipes = React.createClass({
     let that = this;
 
 
+
+
+    // ajax to get tracked workout data
+    $.ajax({
+      url: '/api/exercises/tracked',
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }  
+    })
+    .done((data) => {
+      console.log('tracked exercises ajax: ', data);
+
+
+      data.forEach((el) => {
+
+        this.state.workouts[el.exercise_id] = el;
+        this.setState({workouts: this.state.workouts});
+      })
+    })
+
+
+
+
     // ajax to get saved recipe data
     $.ajax({
       url: '/api/recipes/saved',
@@ -92,33 +115,6 @@ const MyRecipes = React.createClass({
 
       recursiveSavedData(data, 0);
     })
-
-    // ajax to get tracked workout data
-    $.ajax({
-      url: '/api/exercises/tracked',
-      beforeSend: function( xhr ) {
-        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
-      }  
-    })
-    .done((data) => {
-      console.log('tracked exercises ajax: ', data);
-
-
-      function recursiveTracker(collection, i) {
-        if(collection.length == i) {
-          return;
-        }
-
-        let el = collection[i];
-        this.state.workouts[el.exercise_id];
-        this.setState({ workouts: this.state.workouts });
-
-        i++;
-        recursiveTracker(collection, i);
-      }
-      recursiveTracker(data, 0);
-
-    })
   },
   renderSavedData : function(key) {
     return (
@@ -156,17 +152,24 @@ const MyRecipes = React.createClass({
 
 const Tracker = React.createClass({
 
+  renderTracker : function() {
+
+  },
+
   render : function() {
     return (
       <div className="ui grid">
         <div className="sixteen wide column">
           <div className="ui segment">
-            <h3>Track Zone</h3>
+            <h3 className="ui header">Track Zone</h3>
 
-            
+            <div className="ui three cards" style={{border: '3px solid grey'}}>
 
+            {
+              Object.keys(this.state.workouts).map(this.renderTracker)
+            }
 
-            
+            </div>
 
           </div>
         </div>

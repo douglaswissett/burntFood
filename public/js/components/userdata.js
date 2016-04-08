@@ -44,19 +44,7 @@ const UserData = React.createClass({
             </div>
             <div className="description">
 
-              <div>
-                <ul>
-                  {
-                    !this.props.details.attributes ? (
-                      this.props.details.attributes.course.map((el) => {
-                        return (<li>{el}</li>) 
-                      })
-                    ) : (
-                      null
-                    )
-                  }
-                </ul>
-              </div>
+
 
 
               <div className="ui styled accordion" style={{marginTop: '120px'}}>
@@ -120,6 +108,19 @@ const UserData = React.createClass({
 
 
 
+              // <div>
+              //   <ul>
+              //     {
+              //       !this.props.details.attributes ? (
+              //         this.props.details.attributes.course.map((el) => {
+              //           return (<li>{el}</li>) 
+              //         })
+              //       ) : (
+              //         null
+              //       )
+              //     }
+              //   </ul>
+              // </div>
 
 
 module.exports = UserData;
