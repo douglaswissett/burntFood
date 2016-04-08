@@ -142,7 +142,7 @@ const MyRecipes = React.createClass({
         </div>
       </div>
 
-      <Tracker />
+      <MyTrackers workouts={this.state.workouts} />
 
       </div>
     )
@@ -150,15 +150,17 @@ const MyRecipes = React.createClass({
 });
 
 
-const Tracker = React.createClass({
+const MyTrackers = React.createClass({
 
-  renderTracker : function() {
-
+  renderTracker : function(key) {
+    return (
+      <Tracker key={key} index={key} details={this.props.workouts[key]} />
+    )
   },
 
   render : function() {
     return (
-      <div className="ui grid">
+      <div className="ui grid" id="trackZone">
         <div className="sixteen wide column">
           <div className="ui segment">
             <h3 className="ui header">Track Zone</h3>
@@ -166,7 +168,7 @@ const Tracker = React.createClass({
             <div className="ui three cards" style={{border: '3px solid grey'}}>
 
             {
-              Object.keys(this.state.workouts).map(this.renderTracker)
+              Object.keys(this.props.workouts).map(this.renderTracker)
             }
 
             </div>
@@ -179,6 +181,37 @@ const Tracker = React.createClass({
 });
 
 
+const Tracker = React.createClass({
+
+  render : function() {
+    return (
+      <div className="card">
+        <div className="content">
+          <div className="header">
+            {this.props.details.exercise +' for '+ this.props.details.duration}
+          </div>
+          <div className="description">
+            {'A portion of '+this.props.details.recipe}<br/>
+            {'Created on '+this.props.details.created}<br/>
+            {
+              this.props.details.status ? (
+                'Completed'
+              ) : (
+                'In progress'
+              )
+            }
+          </div>
+        </div>
+        <div className="extra content">
+          <div className="ui two buttons">
+            <div className="ui basic green button">Done</div>
+            <div className="ui basic red button">Drop</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+});
 
 
 module.exports = MyRecipes;
