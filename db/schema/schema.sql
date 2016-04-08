@@ -19,7 +19,8 @@ create table exercises(
   exercise_id serial primary key,
   exercise text,
   duration numeric,
-  status boolean not null DEFAULT FALSE
+  status boolean not null DEFAULT FALSE,
+  tracking boolean not null DEFAULT FALSE
 );
 
 create table exercise_categories(

@@ -1,5 +1,6 @@
 'use strict'
 const React = require('react');
+const auth  = require('../auth');
 
 const UserData = React.createClass({
   componentDidMount : function() {
@@ -14,8 +15,22 @@ const UserData = React.createClass({
     this.props.deleteData(this.props.index);
   },
   handleTrack : function() {
-    
     this.props.addTracker(this.props.details.exercise_id);
+
+    console.log('ex_id: ', this.props.details.exercise_id);
+
+    $.ajax({
+      url: '/api/exercises/track/' + this.props.details.exercise_id,
+      type: 'PUT',
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }
+    })
+    .done(() => {
+      console.log('tracker boolean set to true');
+    });
+
+
   },
   render : function() {
     

@@ -7,7 +7,8 @@ const MyRecipes = React.createClass({
 
   getInitialState : function() {
     return {
-      savedData: {}
+      savedData: {},
+      workouts: {}
     }
   },
   addTracker : function(exer_id) {
@@ -22,6 +23,9 @@ const MyRecipes = React.createClass({
     })
     .done((data) => {
       console.log('backend track data: ', data);
+
+      this.state.workouts['workout-'+data.exercise_id] = data;
+      this.setState({ workouts: this.state.workouts });
     })
 
   },
@@ -43,6 +47,8 @@ const MyRecipes = React.createClass({
   componentWillMount : function() {
     let that = this;
 
+
+    // ajax to get saved recipe data
     $.ajax({
       url: '/api/recipes/saved',
       beforeSend: function( xhr ) {
@@ -50,7 +56,7 @@ const MyRecipes = React.createClass({
       }
     })
     .done((data) => {
-
+      // recursive function to setState of each saved recipe
       function recursiveSavedData(collection, i) {
         if(collection.length == i) {
           return;
@@ -85,6 +91,33 @@ const MyRecipes = React.createClass({
       }
 
       recursiveSavedData(data, 0);
+    })
+
+    // ajax to get tracked workout data
+    $.ajax({
+      url: '/api/exercises/tracked',
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }  
+    })
+    .done((data) => {
+      console.log('tracked exercises ajax: ', data);
+
+
+      function recursiveTracker(collection, i) {
+        if(collection.length == i) {
+          return;
+        }
+
+        let el = collection[i];
+        this.state.workouts[el.exercise_id];
+        this.setState({ workouts: this.state.workouts });
+
+        i++;
+        recursiveTracker(collection, i);
+      }
+      recursiveTracker(data, 0);
+
     })
   },
   renderSavedData : function(key) {

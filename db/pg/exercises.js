@@ -68,7 +68,39 @@ function getExerciseById(req, res, next) {
   })
 }
 
+function trackExercise(req, res, next) {
+  console.log('trackExercise pg: ', req.params.ex_id);
+
+  db.none(`UPDATE exercises SET tracking = true 
+          WHERE exercise_id = $1`,
+          [ req.params.ex_id ])
+    .then(next)
+    .catch((err) => {
+      console.error('erroring adding tracker: ', err);
+      next();
+    })
+}
+
+function getTrackedExercises(req, res, next) {
+
+  db.any(`SELECT e.*, r.recipe, r.yummly_id, r.calories, r.created FROM exercises as e 
+          LEFT JOIN recipes as r 
+          ON r.exercise_id = e.exercise_id 
+          WHERE e.tracking = true`)
+    .then((data) => {
+      console.log(data);
+      res.data = data;
+      next();
+    })
+    .catch((err) => {
+      console.error('erroring getting tracked exercises: ', err);
+      next();
+    })
+}
+
 module.exports.getExerciseType = getExerciseType;
 module.exports.deleteExercise = deleteExercise;
 module.exports.insertExercise  = insertExercise;
 module.exports.getExerciseById  = getExerciseById;
+module.exports.trackExercise  = trackExercise;
+module.exports.getTrackedExercises  = getTrackedExercises;

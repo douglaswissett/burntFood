@@ -21,16 +21,28 @@ exercises.route('/')
   res.json(res.data);
 })
 
+exercises.route('/tracked')
+  .get( db.getTrackedExercises, (req, res) => {
+    // get all tracked exercises
+    res.json(res.data);
+  })
+
 
 exercises.get('/random', db.getExerciseType, (req ,res) => {
   console.log(res.data);
   res.json(res.data);
 })
 
-exercises.get('/track/:ex_id', db.getExerciseById, (req, res) => {
-  // get exercise info by id
-  res.json(res.data);
-})
+exercises.route('/track/:ex_id')
+  .get(db.getExerciseById, (req, res) => {
+    // get exercise info by id
+    res.json(res.data);
+  })
+  .put( db.trackExercise, (req, res) => {
+    // update tracking boolean
+    res.send('adding tracker');
+  })
+
 
 exercises.delete('/delete/:ex_id', db.deleteExercise, (req, res) => {
   // delete exercise
