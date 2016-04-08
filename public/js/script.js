@@ -71,6 +71,13 @@ const App = React.createClass({
     });
 
     $('#homeBtn').click(function() {
+      $('.ui.grid.myRecipe').hide();
+      $('#mainDash').show();
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+
+    $('#backBtn').click(function() {
     $("html, body").animate({ scrollTop: 0 }, "slow");
         return false;
     });
@@ -78,8 +85,8 @@ const App = React.createClass({
 
     $('#hungryBtn').click(function() {
       console.log('move to hungry');
-        $('#mainDash').show();
         $('.ui.grid.myRecipe').hide();
+        $('#mainDash').show();
         $('html,body').animate({
             scrollTop: $('#dashboard').offset().top},
             'slow');
@@ -137,8 +144,8 @@ const App = React.createClass({
           <div className="ui sticky nav">
             <div className="ui three item menu">
 
-              <div style={{border: '3px solid black', margin: '0 145px 0 -45px'}}>Company logo</div>
-              <a className="item right floated" id="homeBtn">Back to top</a>
+              <Link to="/"><div style={{border: '3px solid black', margin: '0 145px 0 -45px'}} id="homeBtn">Company logo</div></Link>
+              <a className="item right floated" id="backBtn">Back to top</a>
               <Link to="/"><a className="item right floated" id="hungryBtn">Hungry?</a></Link>
               <Link to="/recipes"><a className="item right floated" id="statsBtn">My Area</a></Link>
               <Link to="/logout"><a className="item right floated">Logout</a></Link>
