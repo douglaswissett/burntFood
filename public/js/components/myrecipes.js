@@ -1,7 +1,10 @@
 const React = require('react');
 const auth    = require('../auth');
-const moment   = require('moment');
+
+
 const UserData = require('./userdata.js');
+const MyTrackers = require('./mytrackers.js');
+
 
 const MyRecipes = React.createClass({
 
@@ -83,6 +86,11 @@ const MyRecipes = React.createClass({
       recursiveSavedData(data, 0);
     })
   },
+  completeTracker : function(key) {
+
+    this.state.workouts[key].status = true;
+    this.setState({ workouts: this.state.workouts });
+  },
   dropTracker : function(key) {
     let that = this;
     console.log('droptracker: ',key);
@@ -159,86 +167,13 @@ const MyRecipes = React.createClass({
         </div>
       </div>
 
-      <MyTrackers workouts={this.state.workouts} dropTracker={this.dropTracker} />
+      <MyTrackers workouts={this.state.workouts} dropTracker={this.dropTracker} completeTracker={this.completeTracker} />
 
       </div>
     )
   }
 });
 
-
-const MyTrackers = React.createClass({
-
-  renderTracker : function(key) {
-    return (
-      <Tracker key={key} index={key} details={this.props.workouts[key]} dropTracker={this.props.dropTracker} />
-    )
-  },
-  filterTracked : function(key) {
-    return this.props.workouts[key].tracking === true;
-  },
-  render : function() {
-    return (
-      <div className="ui grid" id="trackZone">
-        <div className="sixteen wide column">
-          <div className="ui segment">
-            <h3 className="ui header">Track Zone</h3>
-
-            <div className="ui three cards" style={{border: '3px solid grey'}}>
-
-            {
-              Object.keys(this.props.workouts)
-              .filter(this.filterTracked)
-              .map(this.renderTracker)
-            }
-
-            </div>
-
-          </div>
-        </div>
-      </div>
-    )
-  }
-});
-
-
-const Tracker = React.createClass({
-
-  handleDone : function() {
-
-  },
-  handleDrop : function() {
-    this.props.dropTracker(this.props.index);
-  },
-  render : function() {
-    return (
-      <div className="card">
-        <div className="content">
-          <div className="header">
-            {this.props.details.exercise +' for '+ this.props.details.duration}
-          </div>
-          <div className="description">
-            {'A portion of '+this.props.details.recipe}<br/>
-            {'Created on '+ moment(this.props.details.created).format('MMMM Do YYYY, h:mm:ss a')}<br/><br/>
-            {
-              this.props.details.status ? (
-                'Status: Superstar!!'
-              ) : (
-                'Status: You still need to workout... Come on mate'
-              )
-            }
-          </div>
-        </div>
-        <div className="extra content">
-          <div className="ui two buttons">
-            <div className="ui basic green button" onClick={this.handleDone}>Done</div>
-            <div className="ui basic red button" onClick={this.handleDrop}>Drop</div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-});
 
 
 module.exports = MyRecipes;

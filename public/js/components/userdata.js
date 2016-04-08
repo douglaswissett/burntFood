@@ -15,6 +15,7 @@ const UserData = React.createClass({
     this.props.deleteData(this.props.index);
   },
   handleTrack : function() {
+    let that = this;
     console.log('ex_id: ', this.props.details.exercise_id);
 
     $.ajax({
@@ -27,6 +28,15 @@ const UserData = React.createClass({
     .done(() => {
       console.log('tracker boolean set to true');
       this.props.addTracker(this.props.details.exercise_id);
+
+      
+      setTimeout(function(){
+        $('html,body').animate({
+        scrollTop: $('.card.workout-'+that.props.details.exercise_id).offset().top},
+        'slow');
+      },200);
+      
+
     });
 
   },
@@ -38,7 +48,7 @@ const UserData = React.createClass({
           <div className="content">
             <img className="right floated mini ui image" src={this.props.details.img_url} style={{width: '185px !important'}} />
             <div className="header">
-              {this.props.details.recipe}
+              <h4>{this.props.details.recipe}</h4>
             </div>
             <div className="description">
 

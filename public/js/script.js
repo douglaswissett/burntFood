@@ -53,9 +53,11 @@ const App = React.createClass({
     $(document).scroll(function() { 
         scroll_pos = $(this).scrollTop();
         if(scroll_pos > 210) {
-            $(".ui.three.item.menu").css('background-color', 'grey');
-        } else {
             $(".ui.three.item.menu").css('background-color', 'white');
+            $('.item.right.floated').css('color', 'black');
+        } else {
+            $('.item.right.floated').css('color', 'white');
+            $(".ui.three.item.menu").css('background-color', 'transparent');
         }
     });
 
@@ -73,6 +75,7 @@ const App = React.createClass({
 
     $('#homeBtn').click(function() {
       $('.ui.grid.myRecipe').hide();
+      $('#myRecipes').css('display','none');
       $('#mainDash').show();
     $("html, body").animate({ scrollTop: 0 }, "slow");
         return false;
@@ -82,21 +85,29 @@ const App = React.createClass({
     $("html, body").animate({ scrollTop: 0 }, "slow");
         return false;
     });
-    
 
     $('#hungryBtn').click(function() {
       console.log('move to hungry');
         $('.ui.grid.myRecipe').hide();
+        $('#myRecipes').css('display','none');
+        $('.user.steps').fadeOut();
+
+        setTimeout(function(){
+          $('.user.steps').css('display','none');
+        },1000);
+
         $('#mainDash').show();
         $('html,body').animate({
-            scrollTop: $('#dashboard').offset().top},
+            scrollTop: 500 },
             'slow');
     });
 
     $('#statsBtn').click(function() {
         $('#mainDash').hide();
+        $('.user.steps').hide();
+        $('#myRecipes').css('display','inline-block');
         $('.ui.grid.myRecipe').show();
-        $("html, body").animate({ scrollTop: 0 }, "slow");
+        $("html, body").animate({ scrollTop: 280 }, "slow");
     });
 
   },
@@ -136,6 +147,21 @@ const App = React.createClass({
       recipes: this.state.recipes
     });
   },
+  handleHungry : function() {
+      console.log('move to hungry');
+        $('.ui.grid.myRecipe').hide();
+        $('#myRecipes').css('display','none');
+        $('.user.steps').fadeOut();
+
+        setTimeout(function(){
+          $('.user.steps').css('display','none');
+        },1000);
+
+        $('#mainDash').show();
+        $('html,body').animate({
+            scrollTop: 500 },
+            'slow');
+  },
   render : function() {
     if(this.state.loggedIn) {
 
@@ -145,21 +171,56 @@ const App = React.createClass({
           <div className="ui sticky nav">
             <div className="ui three item menu">
 
-              <Link to="/"><div style={{border: '3px solid black', margin: '0 145px 0 -45px'}} id="homeBtn">Company logo</div></Link>
-              <a className="item right floated" id="backBtn">Back to top</a>
-              <Link to="/"><a className="item right floated" id="hungryBtn">Hungry?</a></Link>
-              <Link to="/recipes"><a className="item right floated" id="statsBtn">My Area</a></Link>
-              <Link to="/logout"><a className="item right floated">Logout</a></Link>
+              <Link to="/"><div style={{border: '3px solid black', margin: '0 145px 0 -45px'}} id="homeBtn">BWYE</div></Link>
+              <a className="item right floated" id="backBtn" style={{fontWeight: 'bold'}}>Back to top</a>
+              <Link to="/"><a className="item right floated" id="hungryBtn" style={{fontWeight: 'bold'}}>Hungry?</a></Link>
+              <Link to="/recipes"><a className="item right floated" id="statsBtn" style={{fontWeight: 'bold'}}>My Area</a></Link>
+              <Link to="/logout"><a className="item right floated" style={{fontWeight: 'bold'}}>Logout</a></Link>
             </div>
           </div>
 
-          <div className="ui container" id="appContainer" >
+          <div className="user steps">
+
+                     <div className="ui steps" style={{position: 'absolute', top: '75px'}}>
+                        <div className="step">
+                        <i className="food icon"></i>
+                          <div className="content">
+                            <div className="title">Our goal</div>
+                            <div className="description">Burn what you eat</div>
+                          </div>
+                        </div>
+                      </div>
+
+                       <div className="ui ordered steps" style={{position: 'absolute', top: '180px'}}>
+                        <div className="step click" onClick={this.handleHungry}>
+                          <div className="content">
+                            <div className="title">Find recipes</div>
+                            <div className="description">Choose ingredients you love</div>
+                          </div>
+                        </div>
+                        <div className="step click">
+                          <div className="content">
+                            <div className="title">Save recipes</div>
+                            <div className="description">Select recipes you like</div>
+                          </div>
+                        </div>
+                        <div className="step click">
+                          <div className="content">
+                            <div className="title">Track workouts</div>
+                            <div className="description">See your calorie burns</div>
+                          </div>
+                        </div>
+                      </div>         
+
+            </div>
+
+          <div className="ui container" id="appContainer">
 
             <div className="ui grid" id="mainDash">
               <div className="right floated left aligned thirteen wide column">
-                <div className="ui segment" style={{height: '1170px !important', border: '3px solid gold'}}>
+                <div className="ui segment" style={{height: '1170px !important', border: '3px solid gold', backgroundColor: 'transparent'}}>
 
-                  <div className="ui left rail" style={{border: '3px dotted green', height: '905px !important', marginTop: '100px !important'}}>  
+                  <div id="rail" className="ui left rail" style={{border: '3px dotted green', height: '905px !important', marginTop: '100px !important'}}>  
                     <div className="ui sticky">
                       
                       <SearchForm query={this.state.query} recipes={this.state.recipes} setAppState={this.setAppState} />
@@ -195,26 +256,47 @@ const App = React.createClass({
             {this.props.children}
 
           </div>
+
+          <div className="ui inverted vertical footer segment">
+              <div className="ui container">
+                  Burn What You Eat 2016. General Assembly.<br/> 
+                  <a href="https://github.com/douglaswissett">Github</a><br/>
+                  <a href="https://uk.linkedin.com/in/douglaswissett">LinkedIn</a>
+              </div>
+          </div>
+
         </div>
       )
 
     } else {
+
+      let loginStyle = {
+        marginTop: '95px',
+        marginRight: '75px',
+        opacity: '.9'
+      }
+
+      let loginBtnStyle = {
+        marginTop: '15px',
+        marginLeft: '70px',
+        width: '120px'
+      }
 
       return (
         <div className="ui container">
         
         <div className="ui grid">
         <div className="ten wide column centered">
-        <div className="ui segment">
+        <div className="ui segment" style={loginStyle}>
 
 
         <div className="ui two column middle aligned very relaxed stackable grid">
 
                 <div className="column">
                   <form ref="formSignup" className="ui form" onSubmit={this.handleSubmit}>
-                    <input ref="email" type="email" placeholder="Email address" autofocus />
+                    <input ref="email" type="email" placeholder="Email address" autofocus style={{margin: '10px 0'}} />
                     <input ref="pass"  type="password" placeholder="Password" />
-                    <button className="positive ui button" type="submit">Login</button>
+                    <button className="positive ui button" type="submit" style={loginBtnStyle}>Login</button>
                     {this.state.error && (
                       <p>Bad login information</p>
                     )}
@@ -240,6 +322,15 @@ const App = React.createClass({
               </div>
               </div>
               </div>
+
+
+          <div className="ui inverted vertical footer segment">
+              <div className="ui container">
+                  Burn What You Eat 2016. General Assembly.<br/> 
+                  <a href="https://github.com/douglaswissett">Github</a><br/>
+                  <a href="https://uk.linkedin.com/in/douglaswissett">LinkedIn</a>
+              </div>
+          </div>
 
         </div>
       )

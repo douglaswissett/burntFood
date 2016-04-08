@@ -4,6 +4,12 @@ html, body {
   height: 100%;
 }
 
+body {
+    background-image: url('../img/carrot-1085063.jpg');
+  background-size: 150%;
+  background-position: center;
+}
+
 .ui.selection.multiple.dropdown {
   width: 100%;
 }
@@ -34,7 +40,8 @@ html, body {
  }
 
  .ui.three.item.menu {
-  background-color: white;
+  background-color: transparent;
+  color: white;
  }
 
  .nav-item {
@@ -61,6 +68,7 @@ html, body {
 .ui.menu.three.item .item {
   width: 15%;
   margin-left: 0 !important;
+  color: white;
 }
 
 .myRecipe {
@@ -90,3 +98,16 @@ html, body {
   left: 180px;
 }
 
+footer {
+  background-color: white;
+  height: 160px;
+}
+
+#rail {
+  height: 1000px !important;
+}
+
+.step.click {
+  cursor: pointer;
+  cursor: hand;
+}
