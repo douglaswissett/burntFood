@@ -50,6 +50,7 @@ const SearchForm = React.createClass({
             that.props.recipes[recipe.id].largeImage = parsedData.images[0].hostedLargeUrl;
             that.props.recipes[recipe.id].ingredientLines = parsedData.ingredientLines;
             that.props.recipes[recipe.id].totalTime = parsedData.totalTime;
+            that.props.recipes[recipe.id].numberOfServings = parsedData.numberOfServings;
 
             // loop through nutritional values of each recipe and store calories
             parsedData.nutritionEstimates.forEach((el) => {

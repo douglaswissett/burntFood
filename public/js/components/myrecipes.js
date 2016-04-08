@@ -9,6 +9,21 @@ const MyRecipes = React.createClass({
       savedData: {}
     }
   },
+  deleteData : function(key) {
+
+    $.ajax({
+      url: '/api/exercises/delete/' + this.state.savedData[key].exercise_id,
+      type: 'DELETE',
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }
+    })
+    .done((data) => {
+      
+      delete this.state.savedData[key];
+      this.setState({savedData: this.state.savedData})
+    })
+  },
   componentWillMount : function() {
     let that = this;
 
@@ -58,13 +73,14 @@ const MyRecipes = React.createClass({
   },
   renderSavedData : function(key) {
     return (
-      <UserData key={key} index={key} details={this.state.savedData[key]} />
+      <UserData key={key} index={key} details={this.state.savedData[key]} deleteData={this.deleteData}/>
     )
   },
   render : function() {
     return (
-      <div className="ui grid myRecipe">
-        <div className="sixteen wide column" id="myRecipes">
+      <div className="ui grid myRecipe">     
+
+        <div className="sixteen wide column" id="myRecipes" style={{paddingTop: '100px !important'}}>
           <div className="ui segment">
             <h2 className="ui header" style={{textAlign: 'centered'}}>The Burn Zone</h2>
 
@@ -83,8 +99,27 @@ const MyRecipes = React.createClass({
   }
 });
 
+
+
+
+
+
+
+
 const UserData = React.createClass({
+  componentDidMount : function() {
+    $('.ui.accordion')
+    .accordion();
+  },
+  handleWin : function() {
+    
+
+  },
+  handleFail : function() {
+    this.props.deleteData(this.props.index);
+  },
   render : function() {
+    
     return (
       <div className="ui card">
         <div className="card">
@@ -94,30 +129,82 @@ const UserData = React.createClass({
               {this.props.details.recipe}
             </div>
             <div className="description">
-              {"This contains: " + this.props.details.calories + ' calories.'}<br/>
-              {this.props.details.exercise + " for " + this.props.details.duration + ' minutes'}
 
-              <ul>
-                {
-                  this.props.details.list.map(function(el) {
-                    return (<li>{el}</li>)
-                  })
-                }
-              </ul>
+              <div>
+                <ul>
+                  {
+                    !this.props.details.attributes ? (
+                      this.props.details.attributes.course.map((el) => {
+                        return (<li>{el}</li>) 
+                      })
+                    ) : (
+                      null
+                    )
+                  }
+                </ul>
+              </div>
+
+
+              <div className="ui styled accordion" style={{marginTop: '120px'}}>
+                <div className="title">
+                  <i className="dropdown icon"></i>
+                  Ingredients
+                </div>
+                <div className="content">
+                  <ul>
+                    {
+                      this.props.details.list.map(function(el) {
+                        return (<li>{el}</li>)
+                      })
+                    }
+                  </ul>
+                </div>
+                <div className="title">
+                  <i className="dropdown icon"></i>
+                  Cooking info
+                </div>
+                <div className="content">
+                  <ul>
+                    <li>Total cooking time: {this.props.details.totalTime}</li>
+                    <li>Preparation time: {this.props.details.prepTime}</li>
+                    <li>Cooking time: {this.props.details.cookTime}</li>
+                    <li>Serves: {this.props.details.numberOfServings}</li>
+                    <li><a href={this.props.details.attribution.url}>{this.props.details.recipe}</a> recipe</li>
+                  </ul>
+                </div>
+                <div className="title">
+                  <i className="dropdown icon"></i>
+                  Workout info
+                </div>
+                <div className="content">
+                  {"This contains: " + this.props.details.calories + ' calories.'}<br/>
+                  {this.props.details.exercise + " for " + this.props.details.duration + ' minutes'}
+                </div>
+              </div>
+
 
             </div>
           </div>
           <div className="extra content">
             <div className="ui two buttons">
-              <div className="ui basic green button">Win</div>
-              <div className="ui basic red button">Fail</div>
+              <div className="ui basic green button" onClick={this.handleWin}>Win</div>
+              <div className="ui basic red button" onClick={this.handleFail}>Fail</div>
             </div>
+
+            <div>
+              <br/><br/> Powered by 
+              <img src={this.props.details.attribution.logo} />
+            </div>
+
           </div>
         </div>
       </div>
     )
   }
 })
+
+
+
 
 
 module.exports = MyRecipes;

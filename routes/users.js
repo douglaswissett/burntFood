@@ -19,7 +19,7 @@ users.post('/yummly', (req, res) => {
   let allowed = req.body.qs.split('+');
   allowed = allowed.join('&allowedIngredient[]=');
 
-  request(`http:/\/api.yummly.com/v1/api/recipes?_app_id=${process.env.YUMMLY_APP_ID}&_app_key=${process.env.YUMMLY_APIKEY}&allowedIngredient[]=${allowed}&maxResult=4`, function (error, response, body) {
+  request(`http:/\/api.yummly.com/v1/api/recipes?_app_id=${process.env.YUMMLY_APP_ID}&_app_key=${process.env.YUMMLY_APIKEY}&allowedIngredient[]=${allowed}&maxResult=1`, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.send(body);
     }

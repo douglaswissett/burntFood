@@ -30,7 +30,6 @@ function insertExercise(req, res, next) {
   db.one(`INSERT INTO exercises (exercise, duration) VALUES ($1, $2) RETURNING exercise_id;`,
     [req.body.exercise, req.body.duration])
   .then((data) => {
-    console.log(data);
     res.data = data;
     next();
   })
@@ -40,5 +39,17 @@ function insertExercise(req, res, next) {
   })
 }
 
+function deleteExercise(req, res, next) {
+
+  db.none(`DELETE FROM exercises WHERE exercise_id = $1`,
+    [req.params.ex_id])
+  .then(next)
+  .catch((err) => {
+    console.error('error deleting exercise ', err);
+    next();
+  })
+}
+
 module.exports.getExerciseType = getExerciseType;
+module.exports.deleteExercise = deleteExercise;
 module.exports.insertExercise  = insertExercise;

@@ -23,6 +23,7 @@ const App = React.createClass({
   getInitialState : function() {
     return {
       loggedIn: auth.loggedIn(),
+      error: false,
       query: [],
       recipes: {}
     }
@@ -47,6 +48,16 @@ const App = React.createClass({
   },
   componentDidMount : function() {
 
+    let scroll_pos = 0;
+    $(document).scroll(function() { 
+        scroll_pos = $(this).scrollTop();
+        if(scroll_pos > 210) {
+            $(".ui.three.item.menu").css('background-color', 'grey');
+        } else {
+            $(".ui.three.item.menu").css('background-color', 'white');
+        }
+    });
+
     $('.ui.sticky')
     .sticky({
       context: '#appContainer',
@@ -68,6 +79,7 @@ const App = React.createClass({
     $('#hungryBtn').click(function() {
       console.log('move to hungry');
         $('#mainDash').show();
+        $('.ui.grid.myRecipe').hide();
         $('html,body').animate({
             scrollTop: $('#dashboard').offset().top},
             'slow');
@@ -75,6 +87,7 @@ const App = React.createClass({
 
     $('#statsBtn').click(function() {
         $('#mainDash').hide();
+        $('.ui.grid.myRecipe').show();
         $("html, body").animate({ scrollTop: 0 }, "slow");
     });
 
@@ -85,6 +98,35 @@ const App = React.createClass({
     })
     .sidebar('setting', 'transition', 'scale down')
     .sidebar('toggle')
+  },
+  handleSubmit(event) {
+    event.preventDefault()
+
+    const email = this.refs.email.value
+    const pass = this.refs.pass.value
+
+    auth.login(email, pass, (loggedIn) => {
+      if (!loggedIn)
+        return this.setState({ error: true })
+
+      const { location } = this.props
+
+      // force refresh to counter danger unexpected node error
+      window.location.href = window.location.href;
+      // if (location.state && location.state.nextPathname) {
+      //   this.context.router.replace(location.state.nextPathname)
+      // } else {
+      //   this.context.router.replace('/')
+      // }
+    })
+  },
+  clearSearch : function() {
+    this.state.query = [];
+    this.state.recipes = {}
+    this.setState({
+      query: this.state.query,
+      recipes: this.state.recipes
+    });
   },
   render : function() {
     if(this.state.loggedIn) {
@@ -117,9 +159,12 @@ const App = React.createClass({
                       <div className="added list">
                         {
                           this.state.query.length > 0 ? (
-                          <h4 className="ui header">Added ingredients</h4>
+                            <div>
+                              <button className="ui button" onClick={this.clearSearch}>Clear search</button>
+                              <h4 className="ui header">Added ingredients</h4>
+                            </div>
                           ) : (
-                            ''
+                            null
                           )
                         }
                         <ul>
@@ -158,23 +203,14 @@ const App = React.createClass({
         <div className="ui two column middle aligned very relaxed stackable grid">
 
                 <div className="column">
-                  <div className="ui form">
-                    <div className="field">
-                      <label>Username</label>
-                      <div className="ui left icon input">
-                        <input type="text" placeholder="Username" />
-                        <i className="user icon"></i>
-                      </div>
-                    </div>
-                    <div className="field">
-                      <label>Password</label>
-                      <div className="ui left icon input">
-                        <input type="password" />
-                        <i className="lock icon"></i>
-                      </div>
-                    </div>
-                    <Link to="/login"><div className="ui blue submit button">Login</div></Link>
-                  </div>
+                  <form ref="formSignup" className="ui form" onSubmit={this.handleSubmit}>
+                    <input ref="email" type="email" placeholder="Email address" autofocus />
+                    <input ref="pass"  type="password" placeholder="Password" />
+                    <button className="positive ui button" type="submit">Login</button>
+                    {this.state.error && (
+                      <p>Bad login information</p>
+                    )}
+                  </form>
                 </div>
 
 

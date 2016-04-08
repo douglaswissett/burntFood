@@ -14,7 +14,8 @@ html, body {
 }
 
 .card.result:hover {
-  opacity: 0.8;
+  cursor: pointer;
+  cursor: hand;
 }
 
  #appContainer {
@@ -30,6 +31,10 @@ html, body {
   width: 100%;
   height: 43px;
   z-index: 1;
+ }
+
+ .ui.three.item.menu {
+  background-color: white;
  }
 
  .nav-item {
@@ -60,16 +65,28 @@ html, body {
 
 .myRecipe {
   position: relative;
-  top: -485px;
+  top: -300px;
   border: 2px solid blue;
 }
 
 .popup {
   width: 600px;
-  height: 300px;
+  height: 200px;
+  padding: 33px;
   position: fixed;
   top: 188px;
   left: 1440px;
   background-color: white;
-  border: 2px solid black;
+  /*border: 2px solid black;*/
+  text-align: center;
+  border-radius: 10px;
+  opacity: .875;
+  box-shadow: 0 0 30px 0px orange inset;
 }
+
+.profile {
+  position: absolute;
+  top: -310px;
+  left: 180px;
+}
+

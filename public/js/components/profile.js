@@ -5,7 +5,7 @@ const Profile = React.createClass({
 
   render : function() {
     return (
-        <div className="ui segment">
+        <div className="ui segment profile">
         <div className="ui grid">
         <div className="six wide column">
           <div className="ui card">

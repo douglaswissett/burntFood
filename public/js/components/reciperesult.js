@@ -1,10 +1,16 @@
 'use strict'
 const React = require('react');
 const auth  = require('../auth');
+const Link  = require('react-router').Link;
 
 const RecipeResult = React.createClass({
 
   componentDidMount : function() {
+    $('.card.result')
+      .popup({
+        inline: true
+      })
+
     $(".rating").rating();
     let that = this;
 
@@ -16,7 +22,7 @@ const RecipeResult = React.createClass({
       let calories = this.props.details.calories;
       if(this.props.details.calories === undefined) {
         // some yummly data has no calorie intake, give a rough guestimate... dummy data is wrong :)
-        calories = Math.floor(Math.random() * 600 + 100)
+        calories = Math.floor(Math.random() * 400 + 100)
       }
 
       let exercise;
@@ -53,7 +59,7 @@ const RecipeResult = React.createClass({
           
           calcExerciseTime(bmr, +(exercise.met), calories);
           function calcExerciseTime(bmr, met, calories) {
-            duration = (calories / ((bmr / 24) * met)) * 60;
+            duration = ((calories / ((bmr / 24) * met)) * 60) / that.props.details.numberOfServings;
 
             $.ajax({
               url: '/api/exercises',
@@ -91,12 +97,13 @@ const RecipeResult = React.createClass({
                 let $body = $('<div>');
 
                 $header.append(`<h3>Nice! Now you need to workout</h3>`);
-                $body.append(`<p>${exercise.type} for ${Math.ceil(duration)} minutes.</p>`);
+                $body.append(`<p>${exercise.type} for ${Math.ceil(duration)} minutes to burn off a serving of ${that.props.details.recipeName}.</p>`);
+                $body.append(`<p>You can keep track of your recipes & exercises in <Link to="/recipes">My Area</Link></p>`);
                 $body.append(`<button class="ui positive button exercise">Okay!</button>`)
                 $popup.append($header, $body);
 
                 setTimeout(function(){
-                  $popup.velocity({ left: "320px"},
+                  $popup.velocity({ left: "425px"},
                     { duration: 200, easing: "linear"})
                 },200);
 
@@ -123,8 +130,8 @@ const RecipeResult = React.createClass({
   render : function() {
     return (
 
-        <div className="card result" onClick={this.handleClick}>
-          <div className="image">
+        <div className="card result" onClick={this.handleClick} data-title={'Total calories: '+this.props.details.calories} data-content={'Serves: '+this.props.details.numberOfServings} data-variation="large" >
+          <div className="image"  data-content="Add users to your feed">
             <img src={this.props.details.largeImage} className="recipeImg" />
           </div>
           <div className="extra">
