@@ -71,7 +71,7 @@ function getExerciseById(req, res, next) {
 function trackExercise(req, res, next) {
   console.log('trackExercise pg: ', req.params.ex_id);
 
-  db.none(`UPDATE exercises SET tracking = true 
+  db.none(`UPDATE exercises SET tracking = NOT tracking 
           WHERE exercise_id = $1`,
           [ req.params.ex_id ])
     .then(next)
@@ -97,6 +97,7 @@ function getTrackedExercises(req, res, next) {
       next();
     })
 }
+
 
 module.exports.getExerciseType = getExerciseType;
 module.exports.deleteExercise = deleteExercise;

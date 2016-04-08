@@ -1,6 +1,6 @@
 const React = require('react');
 const auth    = require('../auth');
-
+const moment   = require('moment');
 const UserData = require('./userdata.js');
 
 const MyRecipes = React.createClass({
@@ -10,39 +10,6 @@ const MyRecipes = React.createClass({
       savedData: {},
       workouts: {}
     }
-  },
-  addTracker : function(exer_id) {
-
-    console.log('addTracker: ', exer_id);
-
-    $.ajax({
-      url: '/api/exercises/track/' + exer_id,
-      beforeSend: function( xhr ) {
-        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
-      }
-    })
-    .done((data) => {
-      console.log('backend track data: ', data);
-
-      this.state.workouts['workout-'+data.exercise_id] = data;
-      this.setState({ workouts: this.state.workouts });
-    })
-
-  },
-  deleteData : function(key) {
-
-    $.ajax({
-      url: '/api/exercises/delete/' + this.state.savedData[key].exercise_id,
-      type: 'DELETE',
-      beforeSend: function( xhr ) {
-        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
-      }
-    })
-    .done((data) => {
-      
-      delete this.state.savedData[key];
-      this.setState({savedData: this.state.savedData})
-    })
   },
   componentWillMount : function() {
     let that = this;
@@ -116,6 +83,56 @@ const MyRecipes = React.createClass({
       recursiveSavedData(data, 0);
     })
   },
+  dropTracker : function(key) {
+    let that = this;
+    console.log('droptracker: ',key);
+    $.ajax({
+      url: '/api/exercises/track/' + key,
+      type: 'PUT',
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }
+    })
+    .done(() => {
+      console.log('tracker boolean set to true');
+
+      that.state.workouts[key].tracking = false;
+      that.setState({workouts: that.state.workouts});
+
+    });
+  },
+  addTracker : function(exer_id) {
+    console.log('addTracker: ', exer_id);
+
+    $.ajax({
+      url: '/api/exercises/track/' + exer_id,
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }
+    })
+    .done((data) => {
+      console.log('backend track data: ', data);
+
+      this.state.workouts['workout-'+data.exercise_id] = data;
+      this.setState({ workouts: this.state.workouts });
+    })
+
+  },
+  deleteData : function(key) {
+
+    $.ajax({
+      url: '/api/exercises/delete/' + this.state.savedData[key].exercise_id,
+      type: 'DELETE',
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }
+    })
+    .done((data) => {
+      
+      delete this.state.savedData[key];
+      this.setState({savedData: this.state.savedData})
+    })
+  },
   renderSavedData : function(key) {
     return (
       <UserData key={key} index={key} details={this.state.savedData[key]} deleteData={this.deleteData} addTracker={this.addTracker} />
@@ -142,7 +159,7 @@ const MyRecipes = React.createClass({
         </div>
       </div>
 
-      <MyTrackers workouts={this.state.workouts} />
+      <MyTrackers workouts={this.state.workouts} dropTracker={this.dropTracker} />
 
       </div>
     )
@@ -154,10 +171,12 @@ const MyTrackers = React.createClass({
 
   renderTracker : function(key) {
     return (
-      <Tracker key={key} index={key} details={this.props.workouts[key]} />
+      <Tracker key={key} index={key} details={this.props.workouts[key]} dropTracker={this.props.dropTracker} />
     )
   },
-
+  filterTracked : function(key) {
+    return this.props.workouts[key].tracking === true;
+  },
   render : function() {
     return (
       <div className="ui grid" id="trackZone">
@@ -168,7 +187,9 @@ const MyTrackers = React.createClass({
             <div className="ui three cards" style={{border: '3px solid grey'}}>
 
             {
-              Object.keys(this.props.workouts).map(this.renderTracker)
+              Object.keys(this.props.workouts)
+              .filter(this.filterTracked)
+              .map(this.renderTracker)
             }
 
             </div>
@@ -183,6 +204,12 @@ const MyTrackers = React.createClass({
 
 const Tracker = React.createClass({
 
+  handleDone : function() {
+
+  },
+  handleDrop : function() {
+    this.props.dropTracker(this.props.index);
+  },
   render : function() {
     return (
       <div className="card">
@@ -192,20 +219,20 @@ const Tracker = React.createClass({
           </div>
           <div className="description">
             {'A portion of '+this.props.details.recipe}<br/>
-            {'Created on '+this.props.details.created}<br/>
+            {'Created on '+ moment(this.props.details.created).format('MMMM Do YYYY, h:mm:ss a')}<br/><br/>
             {
               this.props.details.status ? (
-                'Completed'
+                'Status: Superstar!!'
               ) : (
-                'In progress'
+                'Status: You still need to workout... Come on mate'
               )
             }
           </div>
         </div>
         <div className="extra content">
           <div className="ui two buttons">
-            <div className="ui basic green button">Done</div>
-            <div className="ui basic red button">Drop</div>
+            <div className="ui basic green button" onClick={this.handleDone}>Done</div>
+            <div className="ui basic red button" onClick={this.handleDrop}>Drop</div>
           </div>
         </div>
       </div>

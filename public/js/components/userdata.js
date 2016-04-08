@@ -15,8 +15,6 @@ const UserData = React.createClass({
     this.props.deleteData(this.props.index);
   },
   handleTrack : function() {
-    this.props.addTracker(this.props.details.exercise_id);
-
     console.log('ex_id: ', this.props.details.exercise_id);
 
     $.ajax({
@@ -28,8 +26,8 @@ const UserData = React.createClass({
     })
     .done(() => {
       console.log('tracker boolean set to true');
+      this.props.addTracker(this.props.details.exercise_id);
     });
-
 
   },
   render : function() {
