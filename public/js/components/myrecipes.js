@@ -13,6 +13,17 @@ const MyRecipes = React.createClass({
   addTracker : function(exer_id) {
 
     console.log('addTracker: ', exer_id);
+
+    $.ajax({
+      url: '/api/exercises/track/' + exer_id,
+      beforeSend: function( xhr ) {
+        xhr.setRequestHeader("Authorization", 'Bearer ' + auth.getToken() );
+      }
+    })
+    .done((data) => {
+      console.log('backend track data: ', data);
+    })
+
   },
   deleteData : function(key) {
 

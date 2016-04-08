@@ -27,10 +27,16 @@ exercises.get('/random', db.getExerciseType, (req ,res) => {
   res.json(res.data);
 })
 
+exercises.get('/track/:ex_id', db.getExerciseById, (req, res) => {
+  // get exercise info by id
+  res.json(res.data);
+})
+
 exercises.delete('/delete/:ex_id', db.deleteExercise, (req, res) => {
   // delete exercise
   res.send('deleted exercise ', req.params.ex_id);
 });
+
 
 
 

@@ -50,6 +50,25 @@ function deleteExercise(req, res, next) {
   })
 }
 
+function getExerciseById(req, res, next) {
+
+  db.one(`SELECT e.*, r.recipe, r.yummly_id, r.calories, r.created FROM exercises as e 
+          LEFT JOIN recipes as r 
+          ON r.exercise_id = e.exercise_id 
+          WHERE e.exercise_id = $1;`,
+          [ req.params.ex_id ])
+  .then((data) => {
+    console.log(data);
+    res.data = data;
+    next();
+  })
+  .catch((err) => {
+    console.error('erroring getting exercise by id: ', err);
+    next();
+  })
+}
+
 module.exports.getExerciseType = getExerciseType;
 module.exports.deleteExercise = deleteExercise;
 module.exports.insertExercise  = insertExercise;
+module.exports.getExerciseById  = getExerciseById;
