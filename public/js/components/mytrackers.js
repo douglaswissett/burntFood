@@ -15,10 +15,10 @@ const MyTrackers = React.createClass({
   },
   render : function() {
     return (
-      <div className="ui grid" id="trackZone">
+      <div className="ui grid" id="trackZone" style={{marginBottom: '-88px', position: 'relative', top: '-210px'}}>
         <div className="sixteen wide column">
-          <div className="ui segment">
-            <h3 className="ui header">Track Zone</h3>
+          <div className="ui segment" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+            <h3 className="ui header" style={{color: 'white'}}>Track Zone</h3>
 
             <div className="ui three cards" style={{border: '3px solid grey'}}>
 

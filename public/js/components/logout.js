@@ -22,6 +22,14 @@ const Logout = React.createClass({
     auth.logout()
   },
   render : function() {
+
+    let footerStyle = {
+      position: 'absolute',
+      left: '0',
+      bottom: '0',
+      width: '100%'
+    }
+
     return (
       <div className="ui container">
         <div className="ui grid">
@@ -35,7 +43,7 @@ const Logout = React.createClass({
           </div>
         </div>
 
-        <div className="ui inverted vertical footer segment">
+        <div className="ui inverted vertical footer segment" style={footerStyle}>
             <div className="ui container">
                 Burn What You Eat 2016. General Assembly.<br/> 
                 <a href="https://github.com/douglaswissett">Github</a><br/>

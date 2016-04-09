@@ -82,6 +82,7 @@ const App = React.createClass({
     });
 
     $('#backBtn').click(function() {
+      
     $("html, body").animate({ scrollTop: 0 }, "slow");
         return false;
     });
@@ -90,11 +91,11 @@ const App = React.createClass({
       console.log('move to hungry');
         $('.ui.grid.myRecipe').hide();
         $('#myRecipes').css('display','none');
-        $('.user.steps').fadeOut();
-
-        setTimeout(function(){
-          $('.user.steps').css('display','none');
-        },1000);
+        // $('.user.steps').fadeOut();
+        
+        // setTimeout(function(){
+        //   $('.user.steps').css('display','none');
+        // },1000);
 
         $('#mainDash').show();
         $('html,body').animate({
@@ -104,20 +105,21 @@ const App = React.createClass({
 
     $('#statsBtn').click(function() {
         $('#mainDash').hide();
-        $('.user.steps').hide();
+        // $('.user.steps').hide();
+        
         $('#myRecipes').css('display','inline-block');
         $('.ui.grid.myRecipe').show();
         $("html, body").animate({ scrollTop: 280 }, "slow");
     });
 
   },
-  handleMenu : function() {
-    $('.ui.sidebar').sidebar({
-      dimPage: false,
-    })
-    .sidebar('setting', 'transition', 'scale down')
-    .sidebar('toggle')
-  },
+  // handleMenu : function() {
+  //   $('.ui.sidebar').sidebar({
+  //     dimPage: false,
+  //   })
+  //   .sidebar('setting', 'transition', 'scale down')
+  //   .sidebar('toggle')
+  // },
   handleSubmit(event) {
     event.preventDefault()
 
@@ -151,11 +153,11 @@ const App = React.createClass({
       console.log('move to hungry');
         $('.ui.grid.myRecipe').hide();
         $('#myRecipes').css('display','none');
-        $('.user.steps').fadeOut();
+        // $('.user.steps').fadeOut();
 
-        setTimeout(function(){
-          $('.user.steps').css('display','none');
-        },1000);
+        // setTimeout(function(){
+        //   $('.user.steps').css('display','none');
+        // },1000);
 
         $('#mainDash').show();
         $('html,body').animate({
@@ -181,7 +183,7 @@ const App = React.createClass({
 
           <div className="user steps">
 
-                     <div className="ui steps" style={{position: 'absolute', top: '75px'}}>
+                     <div className="ui steps" style={{position: 'relative', top: '90px', left: '-4px'}}>
                         <div className="step">
                         <i className="food icon"></i>
                           <div className="content">
@@ -191,7 +193,7 @@ const App = React.createClass({
                         </div>
                       </div>
 
-                       <div className="ui ordered steps" style={{position: 'absolute', top: '180px'}}>
+                       <div className="ui ordered steps" style={{position: 'relative', top: '210px', left: '-207px'}}>
                         <div className="step click" onClick={this.handleHungry}>
                           <div className="content">
                             <div className="title">Find recipes</div>
@@ -282,6 +284,13 @@ const App = React.createClass({
         width: '120px'
       }
 
+      let footerStyle = {
+        position: 'absolute',
+        left: '0',
+        bottom: '0',
+        width: '100%'
+      }
+
       return (
         <div className="ui container">
         
@@ -324,7 +333,7 @@ const App = React.createClass({
               </div>
 
 
-          <div className="ui inverted vertical footer segment">
+          <div className="ui inverted vertical footer segment" style={footerStyle}>
               <div className="ui container">
                   Burn What You Eat 2016. General Assembly.<br/> 
                   <a href="https://github.com/douglaswissett">Github</a><br/>

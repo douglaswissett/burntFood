@@ -83,10 +83,11 @@ function trackExercise(req, res, next) {
 
 function getTrackedExercises(req, res, next) {
 
-  db.any(`SELECT e.*, r.recipe, r.yummly_id, r.calories, r.created FROM exercises as e 
+  db.any(`SELECT e.*, r.recipe, r.yummly_id, r.calories, r.created, r.user_id FROM exercises as e 
           LEFT JOIN recipes as r 
           ON r.exercise_id = e.exercise_id 
-          WHERE e.tracking = true`)
+          WHERE e.tracking = true AND r.user_id = $1;`,
+          [ req.user.user_id ])
     .then((data) => {
       console.log(data);
       res.data = data;

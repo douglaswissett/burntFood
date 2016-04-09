@@ -86,6 +86,14 @@ const MyRecipes = React.createClass({
       recursiveSavedData(data, 0);
     })
   },
+  componentDidMount : function() {
+
+    $('#bottomTopBtn').click(function() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+
+  },
   completeTracker : function(key) {
 
     this.state.workouts[key].status = true;
@@ -152,8 +160,8 @@ const MyRecipes = React.createClass({
       <div className="ui grid myRecipe">     
 
         <div className="sixteen wide column" id="myRecipes" style={{paddingTop: '100px !important'}}>
-          <div className="ui segment">
-            <h2 className="ui header" style={{textAlign: 'centered'}}>My Recipes</h2>
+          <div className="ui segment" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+            <h2 className="ui header" style={{textAlign: 'centered', color: 'white'}}>My Recipes</h2>
 
             <div className="ui two cards" style={{border: '2px solid lime'}}>
 
@@ -168,6 +176,14 @@ const MyRecipes = React.createClass({
       </div>
 
       <MyTrackers workouts={this.state.workouts} dropTracker={this.dropTracker} completeTracker={this.completeTracker} />
+
+        <div className="ui grid">
+          <div className="three wide column centered">
+            <div className="ui segment" style={{ position: 'relative', top: '-105px', textAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+                <button className="ui inverted orange button" id="bottomTopBtn">Back to top</button>
+            </div>
+          </div>
+        </div>
 
       </div>
     )

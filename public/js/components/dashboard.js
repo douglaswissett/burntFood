@@ -27,7 +27,7 @@ const Dashboard = React.createClass({
       fontWeight: 'bold',
       position: 'relative',
       top: '-65px',
-      left: '125px'
+      left: '95px'
     }
 
     return (
@@ -49,7 +49,7 @@ const Dashboard = React.createClass({
 
               ) : (
                 <div>
-                  <i className="pointing left icon" style={{ fontSize: '5em', position: 'relative', top: '38px' }}></i>
+                  <i className="pointing left icon" style={{ fontSize: '5em', position: 'relative', top: '18px', left: '-28px' }}></i>
                   <div style={pointerStyle}>
                     Enter ingredients here
                   </div>

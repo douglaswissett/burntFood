@@ -108,13 +108,12 @@ const RecipeResult = React.createClass({
                 },200);
 
                 $('.button.ui.positive.exercise').click(function() {
-                  console.log('deltete the exercise popup');
                   
                   $popup.velocity({ left: "-1000px"},
                   { duration: 300, easing: "linear"});
 
                   setTimeout(function(){ $popup.remove(); },500);
-
+                  
                 });
               });
             }) 
@@ -124,6 +123,8 @@ const RecipeResult = React.createClass({
     })
   },
   handleClick : function() {
+    // $('.user.steps').hide();
+
     $('.ui.modal.recipe.'+this.props.index)
     .modal('show')
   },
