@@ -56,10 +56,23 @@ const Signup = React.createClass({
 
   },
   render : function() {
+
+    let signUp = {
+      position: 'relative',
+      left: '90px',
+      top: '16px'
+    }
+
+    let back = {
+      position: 'relative',
+      left: '235px',
+      top: '-20px'
+    }
+
     return (
       <div className="ui grid centered">
         <div className="six wide column">
-          <div className="ui segment">
+          <div className="ui segment" style={{    position: 'relative', top: '90px'}}>
 
             <form ref="formSignup" className="ui form" onSubmit={this.handleSubmit}>
               <h2>Please sign up</h2>
@@ -74,10 +87,10 @@ const Signup = React.createClass({
               <input style={{ margin: '7.5px 0 7.5px 18px', width: '110px' }} ref="weight" type="number" placeholder="Weight kg" />
               <input style={{ margin: '7.5px 0 7.5px 18px', width: '110px' }} ref="height" type="number" placeholder="Height cm" />
               
-              <button className="ui primary button" type="submit">Submit</button>
+              <button className="positive ui button" style={signUp} type="submit">Submit</button>
             </form>
 
-            <Link to="/"><button className="ui button">Back</button></Link>
+            <Link to="/"><button className="ui button" style={back}>Back</button></Link>
 
           </div>
         </div>

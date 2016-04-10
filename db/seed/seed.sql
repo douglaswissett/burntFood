@@ -9,7 +9,6 @@ INSERT INTO exercise_categories (type, met) VALUES ('Workout at home', 3.5);
 INSERT INTO exercise_categories (type, met) VALUES ('Speed walk', 3.6);
 INSERT INTO exercise_categories (type, met) VALUES ('Take a leisurely cycle', 4);
 INSERT INTO exercise_categories (type, met) VALUES ('Use a cycling machine', 5.5);
-INSERT INTO exercise_categories (type, met) VALUES ('Do coitus', 5.8);
 INSERT INTO exercise_categories (type, met) VALUES ('Jog', 7);
 INSERT INTO exercise_categories (type, met) VALUES ('Do pushups', 8);
 INSERT INTO exercise_categories (type, met) VALUES ('Do situps', 8);

@@ -76,7 +76,7 @@ const App = React.createClass({
     });
 
     $('#homeBtn').click(function() {
-      $('.ui.grid.myRecipe').hide();
+      $('#myRecipeContainer').hide();
       $('#myRecipes').css('display','none');
       $('#mainDash').show();
     $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -91,26 +91,19 @@ const App = React.createClass({
 
     $('#hungryBtn').click(function() {
       console.log('move to hungry');
-        $('.ui.grid.myRecipe').hide();
+        $('#myRecipeContainer').hide();
         $('#myRecipes').css('display','none');
-        // $('.user.steps').fadeOut();
-        
-        // setTimeout(function(){
-        //   $('.user.steps').css('display','none');
-        // },1000);
 
         $('#mainDash').show();
         $('html,body').animate({
-            scrollTop: 500 },
+            scrollTop: 600 },
             'slow');
     });
 
     $('#statsBtn').click(function() {
-        $('#mainDash').hide();
-        // $('.user.steps').hide();
-        
+        $('#mainDash').hide();    
         $('#myRecipes').css('display','inline-block');
-        $('.ui.grid.myRecipe').show();
+        $('#myRecipeContainer').show();
         $("html, body").animate({ scrollTop: 280 }, "slow");
     });
 
@@ -153,17 +146,12 @@ const App = React.createClass({
   },
   handleHungry : function() {
       console.log('move to hungry');
-        $('.ui.grid.myRecipe').hide();
+        $('#myRecipeContainer').hide();
         $('#myRecipes').css('display','none');
-        // $('.user.steps').fadeOut();
-
-        // setTimeout(function(){
-        //   $('.user.steps').css('display','none');
-        // },1000);
 
         $('#mainDash').show();
         $('html,body').animate({
-            scrollTop: 500 },
+            scrollTop: 600 },
             'slow');
   },
   render : function() {
@@ -222,9 +210,9 @@ const App = React.createClass({
 
             <div className="ui grid" id="mainDash">
               <div className="right floated left aligned thirteen wide column">
-                <div className="ui segment" style={{height: '1170px !important', border: '3px solid gold', backgroundColor: 'transparent'}}>
+                <div className="ui segment" style={{height: '1170px !important', backgroundColor: 'transparent'}}>
 
-                  <div id="rail" className="ui left rail" style={{border: '3px dotted green', height: '905px !important', marginTop: '100px !important'}}>  
+                  <div id="rail" className="ui left rail" style={{ height: '905px !important', marginTop: '100px !important'}}>  
                     <div className="ui sticky">
                       
                       <SearchForm query={this.state.query} recipes={this.state.recipes} setAppState={this.setAppState} />

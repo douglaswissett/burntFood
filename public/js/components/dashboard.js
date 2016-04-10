@@ -44,7 +44,7 @@ const Dashboard = React.createClass({
 
               <div className="ui segment" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
                 <h2 style={{color: 'white'}}>Search for recipes</h2>
-                <div className="ui four cards" style={{border: '1px solid blue'}}>
+                <div className="ui four cards">
                   {
                     Object.keys(this.props.recipes).map(this.renderRecipeResult)
                   }

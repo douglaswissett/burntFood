@@ -156,14 +156,14 @@ const MyRecipes = React.createClass({
   },
   render : function() {
     return (
-      <div>
+      <div id="myRecipeContainer">
       <div className="ui grid myRecipe">     
 
         <div className="sixteen wide column" id="myRecipes" style={{paddingTop: '100px !important'}}>
           <div className="ui segment" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
             <h2 className="ui header" style={{textAlign: 'centered', color: 'white'}}>My Recipes</h2>
 
-            <div className="ui two cards" style={{border: '2px solid lime'}}>
+            <div className="ui two cards">
 
               {
                 Object.keys(this.state.savedData).map(this.renderSavedData)

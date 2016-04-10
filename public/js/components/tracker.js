@@ -15,9 +15,9 @@ const Tracker = React.createClass({
       <div className={"card "+this.props.index} >
         <div className="content">
           <div className="header" style={{fontFamily: 'Lobster'}}>
-            {this.props.details.exercise +' for '+ this.props.details.duration}
+            {this.props.details.exercise +' for '+ this.props.details.duration + ' minutes'}
           </div>
-          <div className="description" style={{fontFamily: 'sans-serif'}}>
+          <div className="description" style={{fontFamily: 'sans-serif', fontSize: '.9em'}}>
             {'A portion of '+this.props.details.recipe}<br/>
             {'Created on '+ moment(this.props.details.created).format('MMMM Do YYYY, h:mm:ss a')}<br/><br/>
             {

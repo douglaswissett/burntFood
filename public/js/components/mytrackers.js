@@ -20,7 +20,7 @@ const MyTrackers = React.createClass({
           <div className="ui segment" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
             <h2 className="ui header" style={{color: 'white'}}>Track Zone</h2>
 
-            <div className="ui three cards" style={{border: '3px solid grey'}}>
+            <div className="ui three cards">
 
             {
               Object.keys(this.props.workouts)
