@@ -14,10 +14,10 @@ const Tracker = React.createClass({
     return (
       <div className={"card "+this.props.index} >
         <div className="content">
-          <div className="header">
+          <div className="header" style={{fontFamily: 'Lobster'}}>
             {this.props.details.exercise +' for '+ this.props.details.duration}
           </div>
-          <div className="description">
+          <div className="description" style={{fontFamily: 'sans-serif'}}>
             {'A portion of '+this.props.details.recipe}<br/>
             {'Created on '+ moment(this.props.details.created).format('MMMM Do YYYY, h:mm:ss a')}<br/><br/>
             {

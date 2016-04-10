@@ -55,9 +55,11 @@ const App = React.createClass({
         if(scroll_pos > 210) {
             $(".ui.three.item.menu").css('background-color', 'white');
             $('.item.right.floated').css('color', 'black');
+            $('#logo').attr('src','../img/bwye.png')
         } else {
             $('.item.right.floated').css('color', 'white');
             $(".ui.three.item.menu").css('background-color', 'transparent');
+            $('#logo').attr('src','../img/bwye2.png')
         }
     });
 
@@ -171,9 +173,9 @@ const App = React.createClass({
         <div>
 
           <div className="ui sticky nav">
-            <div className="ui three item menu">
+            <div className="ui three item menu" style={{fontSize: '1.2em'}}>
 
-              <Link to="/"><div style={{border: '3px solid black', margin: '0 145px 0 -45px'}} id="homeBtn">BWYE</div></Link>
+              <Link to="/"><div style={{ margin: '0 145px 0 -45px'}} id="homeBtn"><img id="logo" src="../img/bwye2.png" style={{width: '60px'}} /></div></Link>
               <a className="item right floated" id="backBtn" style={{fontWeight: 'bold'}}>Back to top</a>
               <Link to="/"><a className="item right floated" id="hungryBtn" style={{fontWeight: 'bold'}}>Hungry?</a></Link>
               <Link to="/recipes"><a className="item right floated" id="statsBtn" style={{fontWeight: 'bold'}}>My Area</a></Link>
@@ -184,7 +186,7 @@ const App = React.createClass({
           <div className="user steps">
 
                      <div className="ui steps" style={{position: 'relative', top: '90px', left: '-4px'}}>
-                        <div className="step">
+                        <div className="step" style={{fontSize: '1.3em', lineHeight: '20px'}}>
                         <i className="food icon"></i>
                           <div className="content">
                             <div className="title">Our goal</div>
@@ -193,20 +195,20 @@ const App = React.createClass({
                         </div>
                       </div>
 
-                       <div className="ui ordered steps" style={{position: 'relative', top: '210px', left: '-207px'}}>
-                        <div className="step click" onClick={this.handleHungry}>
+                       <div className="ui ordered steps" style={{position: 'relative', top: '210px', left: '-250px'}}>
+                        <div className="step click" onClick={this.handleHungry} style={{fontSize: '1.3em', lineHeight: '20px'}}>
                           <div className="content">
                             <div className="title">Find recipes</div>
                             <div className="description">Choose ingredients you love</div>
                           </div>
                         </div>
-                        <div className="step click">
+                        <div className="step click" style={{fontSize: '1.3em', lineHeight: '20px'}}>
                           <div className="content">
                             <div className="title">Save recipes</div>
                             <div className="description">Select recipes you like</div>
                           </div>
                         </div>
-                        <div className="step click">
+                        <div className="step click" style={{fontSize: '1.3em', lineHeight: '20px'}}>
                           <div className="content">
                             <div className="title">Track workouts</div>
                             <div className="description">See your calorie burns</div>
@@ -260,7 +262,7 @@ const App = React.createClass({
           </div>
 
           <div className="ui inverted vertical footer segment">
-              <div className="ui container">
+              <div className="ui container" style={{fontFamily: 'sans-serif'}}>
                   Burn What You Eat 2016. General Assembly.<br/> 
                   <a href="https://github.com/douglaswissett">Github</a><br/>
                   <a href="https://uk.linkedin.com/in/douglaswissett">LinkedIn</a>
@@ -313,7 +315,7 @@ const App = React.createClass({
                 </div>
 
 
-                <div className="ui vertical divider">
+                <div className="ui vertical divider" style={{fontFamily: 'sans-serif'}}>
                   Or
                 </div>
 
@@ -334,7 +336,7 @@ const App = React.createClass({
 
 
           <div className="ui inverted vertical footer segment" style={footerStyle}>
-              <div className="ui container">
+              <div className="ui container" style={{fontFamily: 'sans-serif'}}>
                   Burn What You Eat 2016. General Assembly.<br/> 
                   <a href="https://github.com/douglaswissett">Github</a><br/>
                   <a href="https://uk.linkedin.com/in/douglaswissett">LinkedIn</a>

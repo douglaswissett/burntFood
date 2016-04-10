@@ -44,7 +44,7 @@ const Logout = React.createClass({
         </div>
 
         <div className="ui inverted vertical footer segment" style={footerStyle}>
-            <div className="ui container">
+            <div className="ui container" style={{fontFamily: 'sans-serif'}}>
                 Burn What You Eat 2016. General Assembly.<br/> 
                 <a href="https://github.com/douglaswissett">Github</a><br/>
                 <a href="https://uk.linkedin.com/in/douglaswissett">LinkedIn</a>

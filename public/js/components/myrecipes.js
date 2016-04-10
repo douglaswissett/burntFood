@@ -180,7 +180,7 @@ const MyRecipes = React.createClass({
         <div className="ui grid">
           <div className="three wide column centered">
             <div className="ui segment" style={{ position: 'relative', top: '-105px', textAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
-                <button className="ui inverted orange button" id="bottomTopBtn">Back to top</button>
+                <button className="ui inverted orange basic button" id="bottomTopBtn" style={{fontWeight: 'bold'}}>Back to top</button>
             </div>
           </div>
         </div>

@@ -7,10 +7,6 @@ const UserData = React.createClass({
     $('.ui.accordion')
     .accordion();
   },
-  handleWin : function() {
-    
-    console.log(this.props.details);
-  },
   handleFail : function() {
     this.props.deleteData(this.props.index);
   },
@@ -42,20 +38,27 @@ const UserData = React.createClass({
   },
   render : function() {
     
+    let headerStyle = {
+      position: 'relative',
+      top: '50px',
+      left: '20px',
+      fontFamily: 'Lobster'
+    }
+
     return (
       <div className="ui card">
         <div className="card">
           <div className="content">
             <img className="right floated mini ui image" src={this.props.details.img_url} style={{width: '185px !important'}} />
             <div className="header">
-              <h4>{this.props.details.recipe}</h4>
+              <h3 style={headerStyle} >{this.props.details.recipe}</h3>
             </div>
             <div className="description">
 
 
 
 
-              <div className="ui styled accordion" style={{marginTop: '120px'}}>
+              <div className="ui styled accordion" style={{marginTop: '120px', fontFamily: 'sans-serif'}}>
                 <div className="title">
                   <i className="dropdown icon"></i>
                   Ingredients
@@ -97,10 +100,9 @@ const UserData = React.createClass({
             </div>
           </div>
           <div className="extra content">
-            <div className="ui two buttons">
-              <div className="ui basic green button" onClick={this.handleWin}>Win</div>
-              <div className="ui basic red button" onClick={this.handleFail}>Fail</div>
-            </div>
+            
+              <div className="ui basic red button" onClick={this.handleFail} style={{position: 'relative', left: '180px', top: '20px'}}>Remove recipe</div>
+            
 
             <div>
               <br/><br/> Powered by 
@@ -114,21 +116,6 @@ const UserData = React.createClass({
   }
 })
 
-
-
-              // <div>
-              //   <ul>
-              //     {
-              //       !this.props.details.attributes ? (
-              //         this.props.details.attributes.course.map((el) => {
-              //           return (<li>{el}</li>) 
-              //         })
-              //       ) : (
-              //         null
-              //       )
-              //     }
-              //   </ul>
-              // </div>
 
 
 module.exports = UserData;
