@@ -1,6 +1,14 @@
 html, body {
   padding: 0;
   margin: 0;
+  height: 100%;
+  font-family: 'Lobster'
+}
+
+body {
+  background-image: url('../img/carrot-1085063.jpg');
+  background-size: 150%;
+  background-position: center;
 }
 
 .ui.selection.multiple.dropdown {
@@ -8,5 +16,99 @@ html, body {
 }
 
 .ui.input {
+  width: 225px;
+  margin-left: 50px;
+}
+
+.card.result:hover {
+  cursor: pointer;
+  cursor: hand;
+}
+
+ #appContainer {
+  margin-top: 600px;
+ }
+
+ #navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 43px;
+  z-index: 1;
+ }
+
+ .ui.three.item.menu {
+  background-color: transparent;
+  color: white;
+ }
+
+ .nav-item {
+  display: inline-block;
+ }
+
+.fluid.ui.button.header {
+  margin: 0px;
+  border-radius: 0;
+  height: 36px;
+}
+
+.header.item::before {
+  display: none;
+}
+
+.added.list {
+  position: relative;
+  left: 85px;
+  margin: 20px 0 20px;
+}
+
+.ui.menu.three.item .item {
+  width: 15%;
+  margin-left: 0 !important;
+  color: white;
+}
+
+.myRecipe {
+  position: relative;
+  top: -300px;
+}
+
+.popup {
+  width: 600px;
+  height: 255px;
+  padding: 33px;
+  position: fixed;
+  top: 188px;
+  left: 1440px;
+  background-color: white;
+  text-align: center;
+  border-radius: 10px;
+  opacity: .875;
+  box-shadow: 0 0 30px 0px orange inset;
+}
+
+.profile {
+  position: absolute;
+  top: -310px;
+  left: 180px;
+}
+
+footer {
+  background-color: white;
+  height: 160px;
+}
+
+#rail {
+  height: 1000px !important;
+}
+
+.step.click {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.ui.popup.visible {
+  width: 200px;
+  height: 100px;
 }

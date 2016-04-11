@@ -26,9 +26,9 @@ function createUser(req, res, next) {
   createSecure(req.body.email, req.body.password, saveUser)
 
       function saveUser(email, hash) {
-        db.none(`INSERT INTO users (email, password_hash)
-        VALUES ($1, $2)`,
-            [email, hash])
+        db.none(`INSERT INTO users (email, password_hash, age, gender, weight, height)
+        VALUES ($1, $2, $3, $4, $5, $6)`,
+            [email, hash, req.body.age, req.body.gender, req.body.weight, req.body.height])
             .then(next)
             .catch((err) => {
               console.log('error signing up', err.message || err);
@@ -56,5 +56,21 @@ function login(req, res, next) {
       })
 }
 
+function getUserInfo(req, res, next) {
+
+  db.one(`SELECT age, gender, weight, height FROM users WHERE user_id = $1`,
+    [req.user.user_id])
+  .then((data) => {
+    console.log(data);
+    res.rows = data;
+    next();
+  })
+  .catch((err) => {
+    console.error('error grabbing user info ', err);
+    next();
+  })
+}
+
 module.exports.login = login;
 module.exports.createUser = createUser;
+module.exports.getUserInfo = getUserInfo;
