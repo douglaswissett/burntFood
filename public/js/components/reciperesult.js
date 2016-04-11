@@ -96,7 +96,7 @@ const RecipeResult = React.createClass({
                 let $header = $('<div>');
                 let $body = $('<div>');
 
-                $header.append(`<h2>Nice! Now you need to workout</h2><br/>`);
+                $header.append(`<h2>Nice! Now your workout</h2><br/>`);
                 $body.append(`<p style="font-size: 18px" >${exercise.type} for ${Math.ceil(duration)} minutes to burn off a serving of ${that.props.details.recipeName}.</p>`);
                 $body.append(`<p style="font-size: 15px">You can keep track of your recipes & exercises in <Link to="/recipes">My Area</Link></p>`);
                 $body.append(`<button class="ui positive button exercise">Okay!</button>`)
