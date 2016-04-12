@@ -28,15 +28,7 @@ const Signup = React.createClass({
 
     $.post('/api/guests/', signupInfo)
       .done((data) => {
-        if(data) {
-
-          alert('Signup Error, Email Already Exists!')
-        }
-      })
-      .error((error) => {
-        console.error(error);
-
-
+        
         auth.login(email, pass, (loggedIn) => {
           if (!loggedIn)
             return this.setState({ error: true })
@@ -51,6 +43,9 @@ const Signup = React.createClass({
             this.context.router.replace('/')
           }
         })
+      })
+      .error((error) => {
+        console.error(error);
 
       })
 
