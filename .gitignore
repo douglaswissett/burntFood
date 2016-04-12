@@ -34,3 +34,5 @@ node_modules
 
 # custom ignores
 .env
+bundle.js
+*bundle.js
