@@ -33,6 +33,7 @@ const Signup = React.createClass({
 
           alert('Signup Error, Email Already Exists!');
         }
+
       })
       .error((error) => {
         console.error(error);
