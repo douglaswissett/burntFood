@@ -28,26 +28,11 @@ const Signup = React.createClass({
 
     $.post('/api/guests/', signupInfo)
       .done((data) => {
+
         if(data) {
 
-          alert('Signup Error, Email Already Exists!')
+          alert('Signup Error, Email Already Exists!');
         }
-      })
-      .done(() => {
-        auth.login(email, pass, (loggedIn) => {
-          if (!loggedIn)
-            return this.setState({ error: true })
-
-          const { location } = this.props
-
-          // force refresh to counter danger unexpected node error
-          // window.location.href = window.location.href;
-          if (location.state && location.state.nextPathname) {
-            this.context.router.replace(location.state.nextPathname)
-          } else {
-            this.context.router.replace('/')
-          }
-        })
       })
       .error((error) => {
         console.error(error);
@@ -67,7 +52,6 @@ const Signup = React.createClass({
           }
         })
       })
-
   },
   render : function() {
 

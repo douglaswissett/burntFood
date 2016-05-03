@@ -8,7 +8,6 @@ const auth    = require('../auth');
 
 const RecipeResult = require('./reciperesult.js')
 const MyRecipes    = require('./myrecipes.js');
-const SearchForm = require('./SearchForm');
 
 const Dashboard = React.createClass({
   renderRecipeResult : function(key) {
